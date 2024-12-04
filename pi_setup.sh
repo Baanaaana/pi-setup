@@ -55,15 +55,6 @@ echo "@lxpanel --profile LXDE
 @xset s noblank
 @unclutter -idle 0" > ~/.config/lxsession/LXDE-pi/autostart
 
-# Remove previous unclutter configurations if they exist
-rm -f ~/.config/autostart/unclutter.desktop
-sudo rm -f /etc/xdg/autostart/unclutter.desktop
-
-# Remove unclutter from rc.local if it exists
-if grep -q "unclutter" /etc/rc.local; then
-    sudo sed -i '/unclutter/d' /etc/rc.local
-fi
-
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"
 
