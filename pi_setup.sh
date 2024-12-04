@@ -58,4 +58,15 @@ NoDisplay=false
 X-GNOME-Autostart-enabled=true
 EOF
 
-echo "Setup complete! Please restart your system to apply all changes."
+echo "Setup complete! System will reboot in 10 seconds..."
+echo "Press Ctrl+C to cancel reboot"
+
+# Countdown
+for i in {10..1}
+do
+    echo -ne "\rRebooting in $i seconds... "
+    sleep 1
+done
+
+echo -e "\rRebooting now...            "
+sudo reboot

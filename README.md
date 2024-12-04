@@ -74,10 +74,13 @@ The script makes the following changes:
 
 ## After Installation
 
-After running the script:
-- Restart your system to apply all changes
-- The mouse cursor will be permanently hidden
-- Use touchscreen or mouse movement to navigate
+The script will:
+- Automatically reboot your system after a 10-second countdown
+- You can press Ctrl+C to cancel the automatic reboot
+- After reboot:
+  - All configurations will be active
+  - The mouse cursor will be permanently hidden
+  - Use touchscreen or mouse movement to navigate
 
 ## License
 
