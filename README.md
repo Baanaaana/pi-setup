@@ -66,10 +66,10 @@ neofetch
 
 The script makes the following changes:
 
-1. To `/etc/lightdm/lightdm.conf`:
+1. To `/boot/config.txt`:
 
 ```bash
-wayland-session=no
+dtoverlay=vc4-fkms-v3d
 ```
 
 2. To `/etc/xdg/lxsession/LXDE-pi/autostart`:

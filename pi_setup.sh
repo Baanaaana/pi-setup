@@ -1,16 +1,14 @@
 #!/bin/bash
 
-# Switch from Wayland to X11 by modifying config file
+# Switch from Wayland to X11 by modifying raspi config
 echo "Switching from Wayland to X11..."
-if [ -f /etc/lightdm/lightdm.conf ]; then
+if [ -f /boot/config.txt ]; then
     # Backup original config
-    sudo cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf.backup
+    sudo cp /boot/config.txt /boot/config.txt.backup
     
-    # Check if wayland configuration exists
-    if grep -q "^#\?wayland-session=" /etc/lightdm/lightdm.conf; then
-        sudo sed -i 's/^#\?wayland-session=.*/wayland-session=no/' /etc/lightdm/lightdm.conf
-    else
-        echo "wayland-session=no" | sudo tee -a /etc/lightdm/lightdm.conf
+    # Add dtoverlay=vc4-fkms-v3d if not present
+    if ! grep -q "^dtoverlay=vc4-fkms-v3d" /boot/config.txt; then
+        echo "dtoverlay=vc4-fkms-v3d" | sudo tee -a /boot/config.txt
     fi
 fi
 
