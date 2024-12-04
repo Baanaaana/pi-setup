@@ -44,19 +44,36 @@ if ! command -v unclutter &> /dev/null; then
     sudo apt install -y unclutter
 fi
 
-# Create autostart directory if it doesn't exist
-mkdir -p ~/.config/autostart
+# Create system-wide autostart directory if it doesn't exist
+sudo mkdir -p /etc/xdg/autostart
 
-# Create autostart entry for unclutter
-cat > ~/.config/autostart/unclutter.desktop << EOF
+# Create system-wide autostart entry for unclutter
+sudo tee /etc/xdg/autostart/unclutter.desktop << EOF
 [Desktop Entry]
 Type=Application
 Name=Unclutter
-Exec=unclutter -idle 0
+Comment=Hide mouse cursor when idle
+Exec=unclutter -idle 0 -root
+Terminal=false
 Hidden=false
-NoDisplay=false
 X-GNOME-Autostart-enabled=true
 EOF
+
+# Also add to current session
+if ! pgrep unclutter > /dev/null; then
+    unclutter -idle 0 -root &
+fi
+
+# Remove user-specific autostart if it exists
+rm -f ~/.config/autostart/unclutter.desktop
+
+# Add unclutter to rc.local if it's not already there
+if ! grep -q "unclutter" /etc/rc.local; then
+    sudo sed -i '/^exit 0/i \
+# Hide mouse cursor\
+unclutter -idle 0 -root &\
+' /etc/rc.local
+fi
 
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"
