@@ -10,9 +10,9 @@ fi
 echo "Adding configurations to .bashrc..."
 
 # Check if the configurations already exist to avoid duplicates
-if ! grep -q "alias update='sudo -- sh -c \"apt update && apt upgrade\"'" ~/.bashrc; then
+if ! grep -q "alias update='sudo -- sh -c \"apt update && apt upgrade -y\"'" ~/.bashrc; then
     echo -e "\n# update our debian/ubuntu box" >> ~/.bashrc
-    echo "alias update='sudo -- sh -c \"apt update && apt upgrade\"'" >> ~/.bashrc
+    echo "alias update='sudo -- sh -c \"apt update && apt upgrade -y\"'" >> ~/.bashrc
 fi
 
 if ! grep -q "^echo \"\"" ~/.bashrc; then
