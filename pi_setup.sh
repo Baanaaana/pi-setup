@@ -44,16 +44,18 @@ if ! command -v unclutter &> /dev/null; then
     sudo apt install -y unclutter
 fi
 
-# Create LXDE-pi autostart directory if it doesn't exist
-mkdir -p ~/.config/lxsession/LXDE-pi
+# Create system-wide LXDE-pi autostart directory if it doesn't exist
+sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
 
 # Configure unclutter and screensaver settings
-echo "@lxpanel --profile LXDE
+sudo tee /etc/xdg/lxsession/LXDE-pi/autostart << EOF
+@lxpanel --profile LXDE
 @pcmanfm --desktop --profile LXDE
 @xset s off
 @xset -dpms
 @xset s noblank
-@unclutter -idle 0" > ~/.config/lxsession/LXDE-pi/autostart
+@unclutter -idle 0
+EOF
 
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"
