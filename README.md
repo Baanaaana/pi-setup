@@ -9,6 +9,7 @@ The script will:
 - Clear the default terminal message
 - Add a blank line for better readability
 - Install and configure neofetch to display system information at login
+- Install and configure unclutter to permanently hide mouse cursor (works with all display methods)
 - Avoid duplicate entries by checking existing configurations
 
 ## Quick Installation
@@ -59,17 +60,24 @@ clear
 neofetch
 ```
 
+## What Gets Added
+
+The script makes the following changes:
+
+1. Creates an autostart entry for unclutter to hide the mouse cursor system-wide
+
 ## Requirements
 
 - Raspberry Pi running Raspberry Pi OS (or other Debian-based Linux)
-- Internet connection (for installing neofetch if not present)
+- Internet connection (for installing required packages)
 - Basic terminal access
 
 ## After Installation
 
-After running the script, either:
-- Restart your terminal
-- Or run `source ~/.bashrc` to apply changes immediately
+After running the script:
+- Restart your system to apply all changes
+- The mouse cursor will be permanently hidden
+- Use touchscreen or mouse movement to navigate
 
 ## License
 

@@ -37,4 +37,25 @@ if ! command -v neofetch &> /dev/null; then
     sudo apt install -y neofetch
 fi
 
-echo "Setup complete! Please restart your terminal or run 'source ~/.bashrc' to apply changes."
+# Check if unclutter is installed
+if ! command -v unclutter &> /dev/null; then
+    echo "Installing unclutter..."
+    sudo apt update
+    sudo apt install -y unclutter
+fi
+
+# Create autostart directory if it doesn't exist
+mkdir -p ~/.config/autostart
+
+# Create autostart entry for unclutter
+cat > ~/.config/autostart/unclutter.desktop << EOF
+[Desktop Entry]
+Type=Application
+Name=Unclutter
+Exec=unclutter -idle 0
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+EOF
+
+echo "Setup complete! Please restart your system to apply all changes."
