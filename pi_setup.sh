@@ -1,8 +1,18 @@
 #!/bin/bash
 
-# Switch from Wayland to X11 using raspi-config noninteractive mode
+# Switch from Wayland to X11 by modifying config file
 echo "Switching from Wayland to X11..."
-sudo raspi-config nonint do_wayland 1
+if [ -f /etc/lightdm/lightdm.conf ]; then
+    # Backup original config
+    sudo cp /etc/lightdm/lightdm.conf /etc/lightdm/lightdm.conf.backup
+    
+    # Check if wayland configuration exists
+    if grep -q "^#\?wayland-session=" /etc/lightdm/lightdm.conf; then
+        sudo sed -i 's/^#\?wayland-session=.*/wayland-session=no/' /etc/lightdm/lightdm.conf
+    else
+        echo "wayland-session=no" | sudo tee -a /etc/lightdm/lightdm.conf
+    fi
+fi
 
 # Check if .bashrc exists
 if [ ! -f ~/.bashrc ]; then

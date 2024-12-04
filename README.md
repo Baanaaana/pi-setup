@@ -9,7 +9,7 @@ The script will:
 - Clear the default terminal message
 - Add a blank line for better readability
 - Install and configure neofetch to display system information at login
-- Switch display server from Wayland to X11 (required for unclutter)
+- Configure display server to use X11 instead of Wayland
 - Install and configure unclutter to permanently hide mouse cursor
 - Disable screen blanking and screensaver
 - Avoid duplicate entries by checking existing configurations
@@ -66,7 +66,13 @@ neofetch
 
 The script makes the following changes:
 
-1. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
+1. To `/etc/lightdm/lightdm.conf`:
+
+```bash
+wayland-session=no
+```
+
+2. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
 
 ```bash
 @lxpanel --profile LXDE
