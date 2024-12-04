@@ -9,7 +9,8 @@ The script will:
 - Clear the default terminal message
 - Add a blank line for better readability
 - Install and configure neofetch to display system information at login
-- Install and configure unclutter to permanently hide mouse cursor (works with all display methods)
+- Install and configure unclutter to permanently hide mouse cursor
+- Disable screen blanking and screensaver
 - Avoid duplicate entries by checking existing configurations
 
 ## Quick Installation
@@ -64,7 +65,16 @@ neofetch
 
 The script makes the following changes:
 
-1. Creates an autostart entry for unclutter to hide the mouse cursor system-wide
+1. To `~/.config/lxsession/LXDE-pi/autostart`:
+
+```bash
+@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+@xset s off
+@xset -dpms
+@xset s noblank
+@unclutter -idle 0
+```
 
 ## Requirements
 
@@ -80,6 +90,7 @@ The script will:
 - After reboot:
   - All configurations will be active
   - The mouse cursor will be permanently hidden
+  - The screen will never blank or go to sleep
   - Use touchscreen or mouse movement to navigate
 
 ## License

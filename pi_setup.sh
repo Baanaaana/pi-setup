@@ -44,35 +44,24 @@ if ! command -v unclutter &> /dev/null; then
     sudo apt install -y unclutter
 fi
 
-# Create system-wide autostart directory if it doesn't exist
-sudo mkdir -p /etc/xdg/autostart
+# Create LXDE-pi autostart directory if it doesn't exist
+mkdir -p ~/.config/lxsession/LXDE-pi
 
-# Create system-wide autostart entry for unclutter
-sudo tee /etc/xdg/autostart/unclutter.desktop << EOF
-[Desktop Entry]
-Type=Application
-Name=Unclutter
-Comment=Hide mouse cursor when idle
-Exec=unclutter -idle 0 -root
-Terminal=false
-Hidden=false
-X-GNOME-Autostart-enabled=true
-EOF
+# Configure unclutter and screensaver settings
+echo "@lxpanel --profile LXDE
+@pcmanfm --desktop --profile LXDE
+@xset s off
+@xset -dpms
+@xset s noblank
+@unclutter -idle 0" > ~/.config/lxsession/LXDE-pi/autostart
 
-# Also add to current session
-if ! pgrep unclutter > /dev/null; then
-    unclutter -idle 0 -root &
-fi
-
-# Remove user-specific autostart if it exists
+# Remove previous unclutter configurations if they exist
 rm -f ~/.config/autostart/unclutter.desktop
+sudo rm -f /etc/xdg/autostart/unclutter.desktop
 
-# Add unclutter to rc.local if it's not already there
-if ! grep -q "unclutter" /etc/rc.local; then
-    sudo sed -i '/^exit 0/i \
-# Hide mouse cursor\
-unclutter -idle 0 -root &\
-' /etc/rc.local
+# Remove unclutter from rc.local if it exists
+if grep -q "unclutter" /etc/rc.local; then
+    sudo sed -i '/unclutter/d' /etc/rc.local
 fi
 
 echo "Setup complete! System will reboot in 10 seconds..."
