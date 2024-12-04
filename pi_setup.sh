@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Switch from Wayland to X11 using raspi-config noninteractive mode
+echo "Switching from Wayland to X11..."
+sudo raspi-config nonint do_wayland 1
+
 # Check if .bashrc exists
 if [ ! -f ~/.bashrc ]; then
     echo "Creating .bashrc file..."

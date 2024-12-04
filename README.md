@@ -9,6 +9,7 @@ The script will:
 - Clear the default terminal message
 - Add a blank line for better readability
 - Install and configure neofetch to display system information at login
+- Switch display server from Wayland to X11 (required for unclutter)
 - Install and configure unclutter to permanently hide mouse cursor
 - Disable screen blanking and screensaver
 - Avoid duplicate entries by checking existing configurations
@@ -49,7 +50,7 @@ The script adds the following configurations to your `.bashrc`:
 
 ```bash
 # update our debian/ubuntu box
-alias update='sudo -- sh -c "apt update && apt upgrade"'
+alias update='sudo -- sh -c "apt update && apt upgrade -y"'
 
 # add blank line
 echo ""
@@ -65,7 +66,7 @@ neofetch
 
 The script makes the following changes:
 
-1. To `~/.config/lxsession/LXDE-pi/autostart`:
+1. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
 
 ```bash
 @lxpanel --profile LXDE
