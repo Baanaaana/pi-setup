@@ -4,20 +4,26 @@ A simple bash script to customize your Raspberry Pi's terminal configuration. Th
 
 ## Features
 
-The script will:
-- Update and upgrade all system packages first
-- Install and enable RealVNC server for remote access
-- Add useful aliases for common Raspberry Pi tasks:
+The script offers the following optional configurations:
+- System update and upgrade (including kept-back packages)
+- VNC server installation and configuration
+- Useful bash aliases and configurations:
   - `update`: Easy system updates
   - `temp`: Check Raspberry Pi temperature
   - `boot`: Quick edit boot configuration
   - `autostart`: Quick edit autostart configuration
   - `cron`: Quick edit crontab
-- Clear the default terminal message
-- Add a blank line for better readability
-- Install and configure neofetch to display system information at login
-- Install and configure wayfire-plugins-extra to hide mouse cursor
-- Avoid duplicate entries by checking existing configurations
+- Neofetch installation and configuration
+- Wayfire plugins for hiding mouse cursor
+- Optional reboot after installation
+
+## Usage
+
+When running the script, you'll be prompted to confirm each feature:
+- Answer 'y' (yes) to install/configure the feature
+- Answer 'n' (no) to skip the feature
+
+This allows you to customize your installation according to your needs.
 
 ## Quick Installation
 
