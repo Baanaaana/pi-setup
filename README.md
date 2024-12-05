@@ -4,15 +4,10 @@ A script to customize your Raspberry Pi's terminal configuration. This script mo
 
 ## Features
 
-The script offers the following optional configurations:
+The script offers the following configurations:
 - System update and upgrade (including kept-back packages)
 - VNC server installation and configuration
-- Useful bash aliases and configurations:
-  - `update`: Easy system updates
-  - `temp`: Check Raspberry Pi temperature
-  - `boot`: Quick edit boot configuration
-  - `autostart`: Edit the autostart configuration
-  - `cron`: Quick edit crontab
+- Useful bash aliases and configurations
 - Neofetch installation and configuration
 - Automatic reboot after installation
 
@@ -23,6 +18,37 @@ Run this command to automatically download and execute the script:
 ```bash
 curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash
 ```
+
+## What The Script Does
+
+The script performs these steps in order:
+
+1. System Updates:
+   - Updates package lists
+   - Performs system upgrade with dist-upgrade
+   - Performs regular upgrade
+   - Removes unnecessary packages
+
+2. VNC Server Setup:
+   - Installs RealVNC server package
+   - Enables VNC service using raspi-config
+   - Configures VNC for remote access
+
+3. Bash Configuration:
+   - Creates .bashrc if it doesn't exist
+   - Adds useful aliases
+   - Configures terminal appearance
+   - Sets up command shortcuts
+
+4. Neofetch Installation:
+   - Installs neofetch package
+   - Configures it to run at SSH login
+   - Shows system information on login
+
+5. Final Steps:
+   - 10-second countdown to reboot
+   - Option to cancel reboot with Ctrl+C
+   - Automatic system reboot
 
 ## What Gets Added to .bashrc
 
