@@ -69,44 +69,18 @@ if ! command -v unclutter &> /dev/null; then
     sudo apt install -y unclutter
 fi
 
-# Configure lightdm to use X11
-echo "Configuring display manager..."
-sudo mkdir -p /etc/lightdm
-sudo tee /etc/lightdm/lightdm.conf << EOF
-[LightDM]
-logind-check-graphical=true
-
-[Seat:*]
-type=local
-xserver-command=X -nocursor
-EOF
-
 # Create system-wide autostart directory if it doesn't exist
-sudo mkdir -p /etc/xdg/autostart
+sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
 
-# Create system-wide unclutter autostart entry
-sudo tee /etc/xdg/autostart/unclutter.desktop << EOF
-[Desktop Entry]
-Type=Application
-Name=Unclutter
-Comment=Hide mouse cursor
-Exec=unclutter -idle 0 -root
-Terminal=false
-Hidden=false
-X-GNOME-Autostart-enabled=true
-EOF
-
-# Remove user-specific autostart if it exists
-rm -f ~/.config/autostart/unclutter.desktop
-
-# Add to current session
-if ! pgrep unclutter > /dev/null; then
-    unclutter -idle 0 -root &
+# Configure unclutter in LXDE-pi autostart
+if ! grep -q "unclutter" /etc/xdg/lxsession/LXDE-pi/autostart; then
+    echo "@unclutter -idle 0" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
 fi
 
-# Also add to LXDE-pi autostart as backup
-sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
-echo "@unclutter -idle 0 -root" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
+# Start unclutter in current session
+if ! pgrep unclutter > /dev/null; then
+    unclutter -idle 0 &
+fi
 
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"
