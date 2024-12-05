@@ -1,8 +1,12 @@
-# Raspberry Pi Setup Script
+# Raspberry Pi Setup Scripts
 
-A simple bash script to customize your Raspberry Pi's terminal configuration. This script modifies your `.bashrc` file to add useful aliases and configurations.
+A collection of scripts to customize your Raspberry Pi's configuration.
 
-## Features
+## Pi Setup Script
+
+A script to customize your Raspberry Pi's terminal configuration. This script modifies your `.bashrc` file to add useful aliases and configurations.
+
+### Features
 
 The script offers the following optional configurations:
 - System update and upgrade (including kept-back packages)
@@ -16,148 +20,59 @@ The script offers the following optional configurations:
 - Neofetch installation and configuration
 - Optional reboot after installation
 
-## Usage
+## Translation Display Script
 
-When running the script, you'll be prompted to confirm each feature:
-- Answer 'y' (yes) to install/configure the feature
-- Answer 'n' (no) to skip the feature
+A script to install and configure PiTranslate with a local webpage display. This script sets up a live translation tool with a display optimized for 800x480 screens.
 
-This allows you to customize your installation according to your needs.
+### Features
 
-## Quick Installation
+The script will:
+- Install PiTranslate and its dependencies
+- Create a local webpage for displaying translations
+- Set up a lightweight web server
+- Create a desktop shortcut for easy access
+- Configure automatic service startup
+- Optimize display for 800x480 resolution
+
+### Quick Installation
 
 Run these commands:
 
-For automatic installation with all features enabled:
 ```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/translate_setup.sh && chmod +x translate_setup.sh && ./translate_setup.sh
 ```
 
-For interactive installation with feature selection:
-```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh --interactive
-```
-
-## Manual Installation
-
-If you prefer to choose which features to install, you can:
+### Manual Installation
 
 1. Download the script:
 
 ```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/translate_setup.sh
 ```
 
 2. Make it executable:
 
 ```bash
-chmod +x pi_setup.sh
+chmod +x translate_setup.sh
 ```
 
-3. Run the script interactively:
+3. Run the script:
 
 ```bash
-./pi_setup.sh
+./translate_setup.sh
 ```
 
-When running interactively, you'll be prompted to confirm each feature:
-- Answer 'y' (yes) to install/configure the feature
-- Answer 'n' (no) to skip the feature
+### After Installation
 
-## What Gets Added to .bashrc
+- Access the translation display at: http://localhost/translate
+- Double-click the 'Translation Display' shortcut on your desktop
+- The webpage will automatically update with new translations
+- Display is optimized for 800x480 screens
 
-The script adds the following configurations to your `.bashrc`:
+### Requirements
 
-```bash
-# update our debian/ubuntu box
-alias update='sudo -- sh -c "apt update && apt upgrade -y"'
-
-# check raspberry pi temperature
-alias temp='/usr/bin/vcgencmd measure_temp'
-
-# quick edit boot config
-alias boot='sudo nano /boot/firmware/config.txt'
-
-# quick edit autostart config
-alias autostart='sudo nano /etc/xdg/lxsession/LXDE-pi/autostart'
-
-# quick edit crontab
-alias cron='sudo crontab -e'
-
-# add blank line
-echo ""
-
-# clear default message
-clear
-
-# start neofetch at SSH login
-neofetch
-```
-
-## What Gets Added
-
-The script makes the following changes:
-
-1. Installs and enables RealVNC server
-
-2. To `/etc/xdg/autostart/unclutter.desktop`:
-
-```ini
-[Desktop Entry]
-Type=Application
-Name=Unclutter
-Comment=Hide mouse cursor
-Exec=unclutter --timeout 0 --fork
-Terminal=false
-Categories=System;
-```
-
-3. To `/etc/X11/xorg.conf.d/99-nocursor.conf`:
-
-```conf
-Section "ServerFlags"
-    Option "NoCursor" "true"
-EndSection
-```
-
-4. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
-
-```bash
-@unclutter --timeout 0
-```
-
-## Requirements
-
-- Raspberry Pi running Raspberry Pi OS (or other Debian-based Linux)
-- Internet connection (for installing required packages)
-- Basic terminal access
-
-## After Installation
-
-The script will:
-- Automatically reboot your system after a 10-second countdown
-- You can press Ctrl+C to cancel the automatic reboot
-- After reboot:
-  - All configurations will be active
-  - VNC server will be enabled and ready to use
-  - All aliases will be available for use
-
-## Available Aliases
-
-After installation, you can use these shortcuts:
-- `update`: Update and upgrade system packages
-- `temp`: Show current CPU temperature
-- `boot`: Edit the boot configuration file
-- `autostart`: Edit the autostart configuration file
-- `cron`: Edit the root crontab
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## Remote Access
-
-After installation, you can connect to your Raspberry Pi using:
-- VNC Viewer (download from RealVNC website)
-- Default port: 5900
-- Use your Raspberry Pi's IP address and login credentials
+- Raspberry Pi running Raspberry Pi OS
+- Internet connection
+- Python 3
+- Microphone for speech input
+- Web browser (Chromium recommended)
