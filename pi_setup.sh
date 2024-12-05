@@ -71,22 +71,11 @@ sudo apt install -y xserver-xorg-input-synaptics
 sudo mkdir -p /etc/X11/xorg.conf.d
 
 # Create configuration file to disable mouse cursor
-sudo tee /etc/X11/xorg.conf.d/50-synaptics.conf << EOF
-Section "InputClass"
-    Identifier "Touchpad"
-    Driver "synaptics"
-    MatchIsTouchpad "on"
-    Option "HorizTwoFingerScroll" "on"
-    Option "VertTwoFingerScroll" "on"
-    Option "TapButton1" "1"
-    Option "TapButton2" "3"
-    Option "TapButton3" "2"
-EndSection
-
-Section "InputClass"
-    Identifier "No Cursor"
-    Driver "synaptics"
-    Option "CursorSize" "0"
+sudo tee /etc/X11/xorg.conf.d/10-no-cursor.conf << EOF
+Section "Device"
+    Identifier "Card0"
+    Driver "modesetting"
+    Option "NoCursor" "true"
 EndSection
 EOF
 
