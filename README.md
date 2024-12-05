@@ -82,13 +82,10 @@ neofetch
 
 The script makes the following changes:
 
-1. To `~/.config/wayfire.ini`:
+1. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
 
-```ini
-[core]
-plugins = \
-        autostart \
-        hide-cursor
+```bash
+@unclutter --timeout 0 --jitter 0 --ignore-scrolling --hide-on-touch
 ```
 
 ## Requirements
@@ -96,8 +93,6 @@ plugins = \
 - Raspberry Pi running Raspberry Pi OS (or other Debian-based Linux)
 - Internet connection (for installing required packages)
 - Basic terminal access
-- Wayland display server
-- Development packages for building wayfire-plugins-extra
 
 ## After Installation
 

@@ -67,22 +67,13 @@ echo "Installing xserver-xorg-input-synaptics..."
 sudo apt update
 sudo apt install -y xserver-xorg-input-synaptics
 
-# Create X11 configuration directory
-sudo mkdir -p /etc/X11/xorg.conf.d
+# Remove previous cursor hiding attempts
+sudo rm -f /etc/X11/xorg.conf.d/10-no-cursor.conf
 
-# Create configuration file to disable mouse cursor
-sudo tee /etc/X11/xorg.conf.d/10-no-cursor.conf << EOF
-Section "Device"
-    Identifier "Card0"
-    Driver "modesetting"
-    Option "NoCursor" "true"
-EndSection
-EOF
-
-# Install x11-xserver-utils for xsetroot
-echo "Installing x11-xserver-utils..."
+# Install unclutter-xfixes
+echo "Installing unclutter-xfixes..."
 sudo apt update
-sudo apt install -y x11-xserver-utils
+sudo apt install -y unclutter-xfixes
 
 # Create system-wide autostart directory if it doesn't exist
 sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
