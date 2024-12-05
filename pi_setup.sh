@@ -103,11 +103,21 @@ if confirm "Do you want to hide the mouse cursor?"; then
         libcairo2-dev libwlroots-dev libwf-config-dev \
         vulkan-tools mesa-vulkan-drivers \
         meson ninja-build pkg-config cmake \
-        nlohmann-json3-dev
+        nlohmann-json3-dev hwdata libxcb-ewmh-dev \
+        libdisplay-info-dev libliftoff-dev glslang-tools
 
-    # First install Wayfire from source
-    echo "Building Wayfire..."
+    # First install wlroots from source
+    echo "Building wlroots..."
     cd ~
+    rm -rf wlroots
+    git clone https://gitlab.freedesktop.org/wlroots/wlroots.git
+    cd wlroots
+    meson setup build --prefix=/usr --buildtype=release
+    ninja -C build && sudo ninja -C build install
+    cd ~
+
+    # Then install Wayfire
+    echo "Building Wayfire..."
     rm -rf wayfire
     git clone https://github.com/WayfireWM/wayfire.git
     cd wayfire
@@ -133,6 +143,9 @@ plugins = \\
         autostart \\
         hide-cursor
 EOF
+
+    # Update library cache
+    sudo ldconfig
 fi
 
 # Ask for reboot
