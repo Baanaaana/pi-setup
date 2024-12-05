@@ -100,12 +100,22 @@ if confirm "Do you want to hide the mouse cursor?"; then
     echo "Installing required development packages..."
     sudo apt update
     sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
-        libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev \
-        vulkan-tools mesa-vulkan-drivers
+        libcairo2-dev libwlroots-dev libwf-config-dev \
+        vulkan-tools mesa-vulkan-drivers \
+        meson ninja-build pkg-config cmake
 
-    # Clone and build wayfire-plugins-extra
-    echo "Building wayfire-plugins-extra..."
+    # First install Wayfire from source
+    echo "Building Wayfire..."
     cd ~
+    rm -rf wayfire
+    git clone https://github.com/WayfireWM/wayfire.git
+    cd wayfire
+    meson build --prefix=/usr --buildtype=release
+    ninja -C build && sudo ninja -C build install
+    cd ~
+
+    # Now build wayfire-plugins-extra
+    echo "Building wayfire-plugins-extra..."
     rm -rf wayfire-plugins-extra
     git clone https://github.com/WayfireWM/wayfire-plugins-extra
     cd wayfire-plugins-extra
