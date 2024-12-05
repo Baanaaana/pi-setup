@@ -5,6 +5,7 @@ A simple bash script to customize your Raspberry Pi's terminal configuration. Th
 ## Features
 
 The script will:
+- Update and upgrade all system packages first
 - Add useful aliases for common Raspberry Pi tasks:
   - `update`: Easy system updates
   - `temp`: Check Raspberry Pi temperature

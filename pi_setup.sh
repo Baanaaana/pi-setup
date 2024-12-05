@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Update system first
+echo "Updating system packages..."
+sudo apt update && sudo apt upgrade -y
+
 # Check if .bashrc exists
 if [ ! -f ~/.bashrc ]; then
     echo "Creating .bashrc file..."
