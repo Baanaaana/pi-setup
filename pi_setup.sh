@@ -21,9 +21,9 @@ if ! grep -q "alias temp='/usr/bin/vcgencmd measure_temp'" ~/.bashrc; then
     echo "alias temp='/usr/bin/vcgencmd measure_temp'" >> ~/.bashrc
 fi
 
-if ! grep -q "alias boot='sudo nano /boot/config.txt'" ~/.bashrc; then
+if ! grep -q "alias boot='sudo nano /boot/firmware/config.txt'" ~/.bashrc; then
     echo -e "\n# quick edit boot config" >> ~/.bashrc
-    echo "alias boot='sudo nano /boot/config.txt'" >> ~/.bashrc
+    echo "alias boot='sudo nano /boot/firmware/config.txt'" >> ~/.bashrc
 fi
 
 if ! grep -q "alias autostart='sudo nano /etc/xdg/lxsession/LXDE-pi/autostart'" ~/.bashrc; then
