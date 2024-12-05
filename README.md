@@ -6,6 +6,7 @@ A simple bash script to customize your Raspberry Pi's terminal configuration. Th
 
 The script will:
 - Update and upgrade all system packages first
+- Install and enable RealVNC server for remote access
 - Add useful aliases for common Raspberry Pi tasks:
   - `update`: Easy system updates
   - `temp`: Check Raspberry Pi temperature
@@ -82,7 +83,9 @@ neofetch
 
 The script makes the following changes:
 
-1. To `~/.config/wayfire.ini`:
+1. Installs and enables RealVNC server
+
+2. To `~/.config/wayfire.ini`:
 
 ```ini
 [core]
@@ -106,6 +109,7 @@ The script will:
 - You can press Ctrl+C to cancel the automatic reboot
 - After reboot:
   - All configurations will be active
+  - VNC server will be enabled and ready to use
   - The mouse cursor will be permanently hidden
   - Use touchscreen or mouse movement to navigate
   - All aliases will be available for use
@@ -122,3 +126,10 @@ After installation, you can use these shortcuts:
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+## Remote Access
+
+After installation, you can connect to your Raspberry Pi using:
+- VNC Viewer (download from RealVNC website)
+- Default port: 5900
+- Use your Raspberry Pi's IP address and login credentials

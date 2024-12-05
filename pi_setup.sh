@@ -4,6 +4,15 @@
 echo "Updating system packages..."
 sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 
+# Install RealVNC server
+echo "Installing RealVNC server..."
+sudo apt update
+sudo apt install -y realvnc-vnc-server
+
+# Enable VNC using raspi-config non-interactive mode
+echo "Enabling VNC..."
+sudo raspi-config nonint do_vnc 0
+
 # Check if .bashrc exists
 if [ ! -f ~/.bashrc ]; then
     echo "Creating .bashrc file..."
