@@ -2,7 +2,7 @@
 
 # Function to check if script is running interactively
 is_interactive() {
-    [ -t 0 ]
+    [ -t 0 -a -t 1 ]
 }
 
 # Function to ask for yes/no confirmation
@@ -42,14 +42,40 @@ if confirm "Do you want to add useful bash aliases and configurations?"; then
 
     echo "Adding configurations to .bashrc..."
 
-    # Add all the .bashrc configurations here...
     if ! grep -q "alias update='sudo -- sh -c \"apt update && apt upgrade -y\"'" ~/.bashrc; then
         echo -e "\n# update our debian/ubuntu box" >> ~/.bashrc
         echo "alias update='sudo -- sh -c \"apt update && apt upgrade -y\"'" >> ~/.bashrc
     fi
 
-    # Add all other aliases...
-    # [Previous alias configurations remain the same]
+    if ! grep -q "alias temp='/usr/bin/vcgencmd measure_temp'" ~/.bashrc; then
+        echo -e "\n# check raspberry pi temperature" >> ~/.bashrc
+        echo "alias temp='/usr/bin/vcgencmd measure_temp'" >> ~/.bashrc
+    fi
+
+    if ! grep -q "alias boot='sudo nano /boot/firmware/config.txt'" ~/.bashrc; then
+        echo -e "\n# quick edit boot config" >> ~/.bashrc
+        echo "alias boot='sudo nano /boot/firmware/config.txt'" >> ~/.bashrc
+    fi
+
+    if ! grep -q "alias autostart='sudo nano /etc/xdg/lxsession/LXDE-pi/autostart'" ~/.bashrc; then
+        echo -e "\n# quick edit autostart config" >> ~/.bashrc
+        echo "alias autostart='sudo nano /etc/xdg/lxsession/LXDE-pi/autostart'" >> ~/.bashrc
+    fi
+
+    if ! grep -q "alias cron='sudo crontab -e'" ~/.bashrc; then
+        echo -e "\n# quick edit crontab" >> ~/.bashrc
+        echo "alias cron='sudo crontab -e'" >> ~/.bashrc
+    fi
+
+    if ! grep -q "^echo \"\"" ~/.bashrc; then
+        echo -e "\n# add blank line" >> ~/.bashrc
+        echo "echo \"\"" >> ~/.bashrc
+    fi
+
+    if ! grep -q "^clear" ~/.bashrc; then
+        echo -e "\n# clear default message" >> ~/.bashrc
+        echo "clear" >> ~/.bashrc
+    fi
 fi
 
 # Neofetch installation
@@ -72,13 +98,27 @@ if confirm "Do you want to install wayfire-plugins-extra to hide the mouse curso
     sudo apt update
     sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
         libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build \
-        vulkan-tools vulkan-validationlayers-dev cmake \
-        libvulkan-dev vulkan-headers vulkan-validationlayers vulkan-tools
+        cmake libvulkan-dev
 
-    # Set PKG_CONFIG_PATH for vulkan and create symlink if needed
+    # Create and set up Vulkan configuration
     sudo mkdir -p /usr/lib/aarch64-linux-gnu/pkgconfig
-    sudo ln -sf /usr/share/vulkan/registry/vulkan.pc /usr/lib/aarch64-linux-gnu/pkgconfig/vulkan.pc
-    export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig:/usr/share/vulkan/registry:$PKG_CONFIG_PATH"
+    
+    # Create vulkan.pc file
+    sudo tee /usr/lib/aarch64-linux-gnu/pkgconfig/vulkan.pc << EOF
+prefix=/usr
+exec_prefix=\${prefix}
+libdir=\${prefix}/lib/aarch64-linux-gnu
+includedir=\${prefix}/include
+
+Name: vulkan
+Description: Vulkan Loader
+Version: 1.3.239
+Libs: -L\${libdir} -lvulkan
+Cflags: -I\${includedir}
+EOF
+
+    # Set PKG_CONFIG_PATH
+    export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
 
     # Clone and build wayfire-plugins-extra
     echo "Building wayfire-plugins-extra..."
@@ -87,9 +127,10 @@ if confirm "Do you want to install wayfire-plugins-extra to hide the mouse curso
     git clone https://github.com/seffs/wayfire-plugins-extra/
     cd wayfire-plugins-extra
 
+    # Clean and setup build
     rm -rf build
     mkdir build
-    meson setup build
+    PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH" meson setup build
     ninja -C build
     sudo ninja -C build install
 
