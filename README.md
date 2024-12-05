@@ -27,16 +27,16 @@ This allows you to customize your installation according to your needs.
 
 ## Quick Installation
 
-Run one of these commands:
+Run these commands:
 
 For automatic installation with all features enabled:
 ```bash
-curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh
 ```
 
 For interactive installation with feature selection:
 ```bash
-curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash -i
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh --interactive
 ```
 
 ## Manual Installation

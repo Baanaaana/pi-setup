@@ -2,12 +2,12 @@
 
 # Function to check if script is running interactively
 is_interactive() {
-    [ -t 0 -a -t 1 ]
+    [[ "$1" == "--interactive" ]] || [ -t 0 -a -t 1 ]
 }
 
 # Function to ask for yes/no confirmation
 confirm() {
-    if is_interactive; then
+    if is_interactive "$1"; then
         read -p "$1 (y/n): " -n 1 -r
         echo
         [[ $REPLY =~ ^[Yy]$ ]]
@@ -16,6 +16,9 @@ confirm() {
         return 0
     fi
 }
+
+# Check if running in interactive mode
+INTERACTIVE_MODE="$1"
 
 # System update
 if confirm "Do you want to update the system?"; then
