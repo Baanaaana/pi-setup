@@ -87,11 +87,17 @@ fi
 echo "Installing required development packages..."
 sudo apt update
 sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
-    libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build
+    libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build \
+    vulkan-tools vulkan-validationlayers-dev cmake
+
+# Set PKG_CONFIG_PATH for vulkan
+export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
 
 # Clone and build wayfire-plugins-extra
 echo "Building wayfire-plugins-extra..."
 cd ~
+# Remove existing directory if it exists
+rm -rf wayfire-plugins-extra
 git clone https://github.com/seffs/wayfire-plugins-extra/
 cd wayfire-plugins-extra
 meson setup build

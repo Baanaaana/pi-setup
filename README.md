@@ -15,7 +15,7 @@ The script will:
 - Clear the default terminal message
 - Add a blank line for better readability
 - Install and configure neofetch to display system information at login
-- Configure X11 to permanently hide mouse cursor
+- Install and configure wayfire-plugins-extra to hide mouse cursor
 - Avoid duplicate entries by checking existing configurations
 
 ## Quick Installation
@@ -82,10 +82,13 @@ neofetch
 
 The script makes the following changes:
 
-1. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
+1. To `~/.config/wayfire.ini`:
 
-```bash
-@unclutter --timeout 0 --jitter 0 --ignore-scrolling --hide-on-touch
+```ini
+[core]
+plugins = \
+        autostart \
+        hide-cursor
 ```
 
 ## Requirements
@@ -93,6 +96,8 @@ The script makes the following changes:
 - Raspberry Pi running Raspberry Pi OS (or other Debian-based Linux)
 - Internet connection (for installing required packages)
 - Basic terminal access
+- Wayland display server
+- Development packages for building wayfire-plugins-extra
 
 ## After Installation
 
