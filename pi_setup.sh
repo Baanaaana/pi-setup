@@ -62,31 +62,32 @@ if ! command -v neofetch &> /dev/null; then
     sudo apt install -y neofetch
 fi
 
-# Install required packages for wayfire-plugins-extra
-echo "Installing required packages..."
-sudo apt update
-sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build
+# Check if unclutter is installed
+if ! command -v unclutter &> /dev/null; then
+    echo "Installing unclutter..."
+    sudo apt update
+    sudo apt install -y unclutter
+fi
 
-# Clone and build wayfire-plugins-extra
-echo "Building wayfire-plugins-extra..."
-cd ~
-git clone https://github.com/seffs/wayfire-plugins-extra/
-cd wayfire-plugins-extra
-meson setup build
-ninja -C build
-sudo ninja -C build install
+# Create autostart directory
+mkdir -p ~/.config/autostart
 
-# Create wayfire config directory
-mkdir -p ~/.config
-
-# Configure wayfire
-echo "Configuring wayfire..."
-cat > ~/.config/wayfire.ini << EOF
-[core]
-plugins = \\
-        autostart \\
-        hide-cursor
+# Create unclutter autostart entry
+cat > ~/.config/autostart/unclutter.desktop << EOF
+[Desktop Entry]
+Type=Application
+Name=Unclutter
+Comment=Hide mouse cursor
+Exec=unclutter --timeout 0
+Terminal=false
+Hidden=false
+X-GNOME-Autostart-enabled=true
 EOF
+
+# Also add to current session
+if ! pgrep unclutter > /dev/null; then
+    unclutter --timeout 0 &
+fi
 
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"

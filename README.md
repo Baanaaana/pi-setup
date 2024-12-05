@@ -15,7 +15,7 @@ The script will:
 - Clear the default terminal message
 - Add a blank line for better readability
 - Install and configure neofetch to display system information at login
-- Install and configure wayfire-plugins-extra to hide mouse cursor
+- Install and configure unclutter to permanently hide mouse cursor
 - Avoid duplicate entries by checking existing configurations
 
 ## Quick Installation
@@ -82,13 +82,17 @@ neofetch
 
 The script makes the following changes:
 
-1. To `~/.config/wayfire.ini`:
+1. To `~/.config/autostart/unclutter.desktop`:
 
 ```ini
-[core]
-plugins = \
-        autostart \
-        hide-cursor
+[Desktop Entry]
+Type=Application
+Name=Unclutter
+Comment=Hide mouse cursor
+Exec=unclutter --timeout 0
+Terminal=false
+Hidden=false
+X-GNOME-Autostart-enabled=true
 ```
 
 ## Requirements
@@ -96,8 +100,6 @@ plugins = \
 - Raspberry Pi running Raspberry Pi OS (or other Debian-based Linux)
 - Internet connection (for installing required packages)
 - Basic terminal access
-- Wayland display server
-- Development packages for building wayfire-plugins-extra
 
 ## After Installation
 
