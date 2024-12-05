@@ -62,27 +62,6 @@ if ! command -v neofetch &> /dev/null; then
     sudo apt install -y neofetch
 fi
 
-# Install xserver-xorg-input-synaptics
-echo "Installing xserver-xorg-input-synaptics..."
-sudo apt update
-sudo apt install -y xserver-xorg-input-synaptics
-
-# Remove previous cursor hiding attempts
-sudo rm -f /etc/X11/xorg.conf.d/10-no-cursor.conf
-
-# Install unclutter-xfixes
-echo "Installing unclutter-xfixes..."
-sudo apt update
-sudo apt install -y unclutter-xfixes
-
-# Create system-wide autostart directory if it doesn't exist
-sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
-
-# Add cursor hiding to autostart
-if ! grep -q "xsetroot -cursor /dev/null" /etc/xdg/lxsession/LXDE-pi/autostart; then
-    echo "@xsetroot -cursor /dev/null" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
-fi
-
 # Install required dev packages for wayfire-plugins-extra
 echo "Installing required development packages..."
 sudo apt update
