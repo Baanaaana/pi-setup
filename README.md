@@ -11,10 +11,9 @@ The script offers the following optional configurations:
   - `update`: Easy system updates
   - `temp`: Check Raspberry Pi temperature
   - `boot`: Quick edit boot configuration
-  - `autostart`: Quick edit autostart configuration
+  - `autostart`: Edit the autostart configuration
   - `cron`: Quick edit crontab
 - Neofetch installation and configuration
-- Mouse cursor hiding using multiple methods
 - Optional reboot after installation
 
 ## Usage
@@ -132,7 +131,6 @@ EndSection
 - Raspberry Pi running Raspberry Pi OS (or other Debian-based Linux)
 - Internet connection (for installing required packages)
 - Basic terminal access
-- Wayland display server
 
 ## After Installation
 
@@ -140,10 +138,8 @@ The script will:
 - Automatically reboot your system after a 10-second countdown
 - You can press Ctrl+C to cancel the automatic reboot
 - After reboot:
-  - Log out and log back in for group changes to take effect
   - All configurations will be active
-  - The mouse cursor will be permanently hidden
-  - Use touchscreen or mouse movement to navigate
+  - VNC server will be enabled and ready to use
   - All aliases will be available for use
 
 ## Available Aliases

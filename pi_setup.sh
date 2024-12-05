@@ -95,59 +95,6 @@ if confirm "Do you want to install and configure neofetch?"; then
     fi
 fi
 
-# Mouse cursor hiding
-if confirm "Do you want to hide the mouse cursor?"; then
-    echo "Installing required development packages..."
-    sudo apt update
-    sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
-        libcairo2-dev libwlroots-dev libwf-config-dev \
-        vulkan-tools mesa-vulkan-drivers \
-        meson ninja-build pkg-config cmake \
-        nlohmann-json3-dev hwdata libxcb-ewmh-dev \
-        libdisplay-info-dev libliftoff-dev glslang-tools
-
-    # First install wlroots from source
-    echo "Building wlroots..."
-    cd ~
-    rm -rf wlroots
-    git clone https://gitlab.freedesktop.org/wlroots/wlroots.git
-    cd wlroots
-    meson setup build --prefix=/usr --buildtype=release
-    ninja -C build && sudo ninja -C build install
-    cd ~
-
-    # Then install Wayfire
-    echo "Building Wayfire..."
-    rm -rf wayfire
-    git clone https://github.com/WayfireWM/wayfire.git
-    cd wayfire
-    meson setup build --prefix=/usr --buildtype=release
-    ninja -C build && sudo ninja -C build install
-    cd ~
-
-    # Now build wayfire-plugins-extra
-    echo "Building wayfire-plugins-extra..."
-    rm -rf wayfire-plugins-extra
-    git clone https://github.com/WayfireWM/wayfire-plugins-extra
-    cd wayfire-plugins-extra
-    meson setup build --prefix=/usr --buildtype=release
-    ninja -C build && sudo ninja -C build install
-
-    # Create wayfire config directory
-    mkdir -p ~/.config
-
-    # Configure wayfire to use hide_cursor plugin
-    cat > ~/.config/wayfire.ini << EOF
-[core]
-plugins = \\
-        autostart \\
-        hide-cursor
-EOF
-
-    # Update library cache
-    sudo ldconfig
-fi
-
 # Ask for reboot
 if confirm "Do you want to reboot the system now?"; then
     echo "System will reboot in 10 seconds..."
