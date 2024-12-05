@@ -69,25 +69,32 @@ if ! command -v unclutter &> /dev/null; then
     sudo apt install -y unclutter
 fi
 
-# Create autostart directory
-mkdir -p ~/.config/autostart
+# Create system-wide autostart directory if it doesn't exist
+sudo mkdir -p /etc/xdg/autostart
 
-# Create unclutter autostart entry
-cat > ~/.config/autostart/unclutter.desktop << EOF
+# Create system-wide unclutter autostart entry
+sudo tee /etc/xdg/autostart/unclutter.desktop << EOF
 [Desktop Entry]
 Type=Application
 Name=Unclutter
 Comment=Hide mouse cursor
-Exec=unclutter --timeout 0
+Exec=unclutter -idle 0 -root
 Terminal=false
 Hidden=false
 X-GNOME-Autostart-enabled=true
 EOF
 
-# Also add to current session
+# Remove user-specific autostart if it exists
+rm -f ~/.config/autostart/unclutter.desktop
+
+# Add to current session
 if ! pgrep unclutter > /dev/null; then
-    unclutter --timeout 0 &
+    unclutter -idle 0 -root &
 fi
+
+# Also add to LXDE-pi autostart as backup
+sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
+echo "@unclutter -idle 0 -root" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
 
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"

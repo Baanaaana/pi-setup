@@ -82,17 +82,23 @@ neofetch
 
 The script makes the following changes:
 
-1. To `~/.config/autostart/unclutter.desktop`:
+1. To `/etc/xdg/autostart/unclutter.desktop`:
 
 ```ini
 [Desktop Entry]
 Type=Application
 Name=Unclutter
 Comment=Hide mouse cursor
-Exec=unclutter --timeout 0
+Exec=unclutter -idle 0 -root
 Terminal=false
 Hidden=false
 X-GNOME-Autostart-enabled=true
+```
+
+2. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
+
+```bash
+@unclutter -idle 0 -root
 ```
 
 ## Requirements
