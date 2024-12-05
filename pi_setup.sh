@@ -79,6 +79,19 @@ Section "Device"
 EndSection
 EOF
 
+# Install x11-xserver-utils for xsetroot
+echo "Installing x11-xserver-utils..."
+sudo apt update
+sudo apt install -y x11-xserver-utils
+
+# Create system-wide autostart directory if it doesn't exist
+sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
+
+# Add cursor hiding to autostart
+if ! grep -q "xsetroot -cursor /dev/null" /etc/xdg/lxsession/LXDE-pi/autostart; then
+    echo "@xsetroot -cursor /dev/null" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
+fi
+
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"
 

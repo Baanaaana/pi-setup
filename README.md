@@ -82,14 +82,10 @@ neofetch
 
 The script makes the following changes:
 
-1. To `/etc/X11/xorg.conf.d/10-no-cursor.conf`:
+1. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
 
-```conf
-Section "Device"
-    Identifier "Card0"
-    Driver "modesetting"
-    Option "NoCursor" "true"
-EndSection
+```bash
+@xsetroot -cursor /dev/null
 ```
 
 ## Requirements
