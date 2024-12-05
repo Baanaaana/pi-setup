@@ -62,21 +62,31 @@ if ! command -v neofetch &> /dev/null; then
     sudo apt install -y neofetch
 fi
 
-# Remove unclutter if installed
-if command -v unclutter &> /dev/null; then
-    echo "Removing unclutter..."
-    sudo apt remove -y unclutter
-fi
+# Install xserver-xorg-input-synaptics
+echo "Installing xserver-xorg-input-synaptics..."
+sudo apt update
+sudo apt install -y xserver-xorg-input-synaptics
 
 # Create X11 configuration directory
 sudo mkdir -p /etc/X11/xorg.conf.d
 
 # Create configuration file to disable mouse cursor
-sudo tee /etc/X11/xorg.conf.d/99-nocursor.conf << EOF
+sudo tee /etc/X11/xorg.conf.d/50-synaptics.conf << EOF
 Section "InputClass"
-        Identifier "Disable mouse cursor"
-        MatchIsPointer "on"
-        Option "NoCursor" "true"
+    Identifier "Touchpad"
+    Driver "synaptics"
+    MatchIsTouchpad "on"
+    Option "HorizTwoFingerScroll" "on"
+    Option "VertTwoFingerScroll" "on"
+    Option "TapButton1" "1"
+    Option "TapButton2" "3"
+    Option "TapButton3" "2"
+EndSection
+
+Section "InputClass"
+    Identifier "No Cursor"
+    Driver "synaptics"
+    Option "CursorSize" "0"
 EndSection
 EOF
 

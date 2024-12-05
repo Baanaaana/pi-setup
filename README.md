@@ -82,13 +82,24 @@ neofetch
 
 The script makes the following changes:
 
-1. To `/etc/X11/xorg.conf.d/99-nocursor.conf`:
+1. To `/etc/X11/xorg.conf.d/50-synaptics.conf`:
 
 ```conf
 Section "InputClass"
-        Identifier "Disable mouse cursor"
-        MatchIsPointer "on"
-        Option "NoCursor" "true"
+    Identifier "Touchpad"
+    Driver "synaptics"
+    MatchIsTouchpad "on"
+    Option "HorizTwoFingerScroll" "on"
+    Option "VertTwoFingerScroll" "on"
+    Option "TapButton1" "1"
+    Option "TapButton2" "3"
+    Option "TapButton3" "2"
+EndSection
+
+Section "InputClass"
+    Identifier "No Cursor"
+    Driver "synaptics"
+    Option "CursorSize" "0"
 EndSection
 ```
 
