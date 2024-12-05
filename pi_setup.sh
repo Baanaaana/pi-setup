@@ -2,7 +2,7 @@
 
 # Update system first
 echo "Updating system packages..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
 
 # Check if .bashrc exists
 if [ ! -f ~/.bashrc ]; then
