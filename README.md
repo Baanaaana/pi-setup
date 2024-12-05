@@ -27,7 +27,7 @@ This allows you to customize your installation according to your needs.
 
 ## Quick Installation
 
-Run this command to automatically download and execute the script:
+Run this command to automatically download and execute the script with all features enabled:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash
@@ -35,7 +35,7 @@ curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh 
 
 ## Manual Installation
 
-If you prefer to review the script before running it (recommended), you can:
+If you prefer to choose which features to install, you can:
 
 1. Download the script:
 
@@ -49,11 +49,15 @@ curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh
 chmod +x pi_setup.sh
 ```
 
-3. Run the script:
+3. Run the script interactively:
 
 ```bash
 ./pi_setup.sh
 ```
+
+When running interactively, you'll be prompted to confirm each feature:
+- Answer 'y' (yes) to install/configure the feature
+- Answer 'n' (no) to skip the feature
 
 ## What Gets Added to .bashrc
 

@@ -1,10 +1,20 @@
 #!/bin/bash
 
+# Function to check if script is running interactively
+is_interactive() {
+    [ -t 0 ]
+}
+
 # Function to ask for yes/no confirmation
 confirm() {
-    read -p "$1 (y/n): " -n 1 -r
-    echo
-    [[ $REPLY =~ ^[Yy]$ ]]
+    if is_interactive; then
+        read -p "$1 (y/n): " -n 1 -r
+        echo
+        [[ $REPLY =~ ^[Yy]$ ]]
+    else
+        # If not interactive, assume yes for all prompts
+        return 0
+    fi
 }
 
 # System update
