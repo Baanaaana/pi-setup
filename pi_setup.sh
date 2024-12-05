@@ -69,6 +69,18 @@ if ! command -v unclutter &> /dev/null; then
     sudo apt install -y unclutter
 fi
 
+# Configure lightdm to use X11
+echo "Configuring display manager..."
+sudo mkdir -p /etc/lightdm
+sudo tee /etc/lightdm/lightdm.conf << EOF
+[LightDM]
+logind-check-graphical=true
+
+[Seat:*]
+type=local
+xserver-command=X -nocursor
+EOF
+
 # Create system-wide autostart directory if it doesn't exist
 sudo mkdir -p /etc/xdg/autostart
 

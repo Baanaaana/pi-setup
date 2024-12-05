@@ -82,7 +82,18 @@ neofetch
 
 The script makes the following changes:
 
-1. To `/etc/xdg/autostart/unclutter.desktop`:
+1. To `/etc/lightdm/lightdm.conf`:
+
+```ini
+[LightDM]
+logind-check-graphical=true
+
+[Seat:*]
+type=local
+xserver-command=X -nocursor
+```
+
+2. To `/etc/xdg/autostart/unclutter.desktop`:
 
 ```ini
 [Desktop Entry]
@@ -95,7 +106,7 @@ Hidden=false
 X-GNOME-Autostart-enabled=true
 ```
 
-2. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
+3. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
 
 ```bash
 @unclutter -idle 0 -root
