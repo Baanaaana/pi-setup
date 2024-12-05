@@ -14,42 +14,14 @@ The script offers the following optional configurations:
   - `autostart`: Edit the autostart configuration
   - `cron`: Quick edit crontab
 - Neofetch installation and configuration
-- Optional reboot after installation
+- Automatic reboot after installation
 
-## Quick Installation
+## Installation
 
-Run one of these commands:
-
-For automatic installation with all features enabled:
+Run this command to automatically download and execute the script:
 
 ```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh
-```
-
-For interactive installation with feature selection:
-
-```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh --interactive
-```
-
-## Manual Installation
-
-1. Download the script:
-
-```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh
-```
-
-2. Make it executable:
-
-```bash
-chmod +x pi_setup.sh
-```
-
-3. Run the script:
-
-```bash
-./pi_setup.sh
+curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash
 ```
 
 ## What Gets Added to .bashrc
