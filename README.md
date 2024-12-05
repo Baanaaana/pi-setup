@@ -1,12 +1,8 @@
-# Raspberry Pi Setup Scripts
-
-A collection of scripts to customize your Raspberry Pi's configuration.
-
-## Pi Setup Script
+# Raspberry Pi Setup Script
 
 A script to customize your Raspberry Pi's terminal configuration. This script modifies your `.bashrc` file to add useful aliases and configurations.
 
-### Features
+## Features
 
 The script offers the following optional configurations:
 - System update and upgrade (including kept-back packages)
@@ -20,7 +16,7 @@ The script offers the following optional configurations:
 - Neofetch installation and configuration
 - Optional reboot after installation
 
-### Quick Installation
+## Quick Installation
 
 Run one of these commands:
 
@@ -36,7 +32,7 @@ For interactive installation with feature selection:
 curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh --interactive
 ```
 
-### Manual Installation
+## Manual Installation
 
 1. Download the script:
 
@@ -56,59 +52,68 @@ chmod +x pi_setup.sh
 ./pi_setup.sh
 ```
 
-## Translation Display Script
+## What Gets Added to .bashrc
 
-A script to install and configure PiTranslate with a local webpage display. This script sets up a live translation tool with a display optimized for 800x480 screens.
+The script adds the following configurations to your `.bashrc`:
 
-### Features
+```bash
+# update our debian/ubuntu box
+alias update='sudo -- sh -c "apt update && apt upgrade -y"'
+
+# check raspberry pi temperature
+alias temp='/usr/bin/vcgencmd measure_temp'
+
+# quick edit boot config
+alias boot='sudo nano /boot/firmware/config.txt'
+
+# quick edit autostart config
+alias autostart='sudo nano /etc/xdg/lxsession/LXDE-pi/autostart'
+
+# quick edit crontab
+alias cron='sudo crontab -e'
+
+# add blank line
+echo ""
+
+# clear default message
+clear
+
+# start neofetch at SSH login
+neofetch
+```
+
+## Requirements
+
+- Raspberry Pi running Raspberry Pi OS (or other Debian-based Linux)
+- Internet connection (for installing required packages)
+- Basic terminal access
+
+## After Installation
 
 The script will:
-- Install PiTranslate and its dependencies
-- Create a local webpage for displaying translations
-- Set up a lightweight web server
-- Create a desktop shortcut for easy access
-- Configure automatic service startup
-- Optimize display for 800x480 resolution
+- Automatically reboot your system after a 10-second countdown
+- You can press Ctrl+C to cancel the automatic reboot
+- After reboot:
+  - All configurations will be active
+  - VNC server will be enabled and ready to use
+  - All aliases will be available for use
 
-### Quick Installation
+## Available Aliases
 
-Run these commands:
+After installation, you can use these shortcuts:
+- `update`: Update and upgrade system packages
+- `temp`: Show current CPU temperature
+- `boot`: Edit the boot configuration file
+- `autostart`: Edit the autostart configuration file
+- `cron`: Edit the root crontab
 
-```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/translate_setup.sh && chmod +x translate_setup.sh && ./translate_setup.sh
-```
+## License
 
-### Manual Installation
+This project is open source and available under the [MIT License](LICENSE).
 
-1. Download the script:
+## Remote Access
 
-```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/translate_setup.sh
-```
-
-2. Make it executable:
-
-```bash
-chmod +x translate_setup.sh
-```
-
-3. Run the script:
-
-```bash
-./translate_setup.sh
-```
-
-### After Installation
-
-- Access the translation display at: http://localhost/translate
-- Double-click the 'Translation Display' shortcut on your desktop
-- The webpage will automatically update with new translations
-- Display is optimized for 800x480 screens
-
-### Requirements
-
-- Raspberry Pi running Raspberry Pi OS
-- Internet connection
-- Python 3
-- Microphone for speech input
-- Web browser (Chromium recommended)
+After installation, you can connect to your Raspberry Pi using:
+- VNC Viewer (download from RealVNC website)
+- Default port: 5900
+- Use your Raspberry Pi's IP address and login credentials
