@@ -5,7 +5,12 @@ A simple bash script to customize your Raspberry Pi's terminal configuration. Th
 ## Features
 
 The script will:
-- Add an `update` alias for easy system updates
+- Add useful aliases for common Raspberry Pi tasks:
+  - `update`: Easy system updates
+  - `temp`: Check Raspberry Pi temperature
+  - `boot`: Quick edit boot configuration
+  - `autostart`: Quick edit autostart configuration
+  - `cron`: Quick edit crontab
 - Clear the default terminal message
 - Add a blank line for better readability
 - Install and configure neofetch to display system information at login
@@ -91,6 +96,7 @@ plugins = \
 - Internet connection (for installing required packages)
 - Basic terminal access
 - Wayland display server
+- Development packages for building wayfire-plugins-extra
 
 ## After Installation
 
@@ -101,6 +107,16 @@ The script will:
   - All configurations will be active
   - The mouse cursor will be permanently hidden
   - Use touchscreen or mouse movement to navigate
+  - All aliases will be available for use
+
+## Available Aliases
+
+After installation, you can use these shortcuts:
+- `update`: Update and upgrade system packages
+- `temp`: Show current CPU temperature
+- `boot`: Edit the boot configuration file
+- `autostart`: Edit the autostart configuration file
+- `cron`: Edit the root crontab
 
 ## License
 
