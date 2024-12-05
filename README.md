@@ -15,7 +15,7 @@ The script will:
 - Clear the default terminal message
 - Add a blank line for better readability
 - Install and configure neofetch to display system information at login
-- Install and configure unclutter to permanently hide mouse cursor
+- Configure X11 to permanently hide mouse cursor
 - Avoid duplicate entries by checking existing configurations
 
 ## Quick Installation
@@ -82,10 +82,14 @@ neofetch
 
 The script makes the following changes:
 
-1. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
+1. To `/etc/X11/xorg.conf.d/99-nocursor.conf`:
 
-```bash
-@unclutter -idle 0
+```conf
+Section "InputClass"
+        Identifier "Disable mouse cursor"
+        MatchIsPointer "on"
+        Option "NoCursor" "true"
+EndSection
 ```
 
 ## Requirements

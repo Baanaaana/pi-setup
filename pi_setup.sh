@@ -62,25 +62,23 @@ if ! command -v neofetch &> /dev/null; then
     sudo apt install -y neofetch
 fi
 
-# Check if unclutter is installed
-if ! command -v unclutter &> /dev/null; then
-    echo "Installing unclutter..."
-    sudo apt update
-    sudo apt install -y unclutter
+# Remove unclutter if installed
+if command -v unclutter &> /dev/null; then
+    echo "Removing unclutter..."
+    sudo apt remove -y unclutter
 fi
 
-# Create system-wide autostart directory if it doesn't exist
-sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
+# Create X11 configuration directory
+sudo mkdir -p /etc/X11/xorg.conf.d
 
-# Configure unclutter in LXDE-pi autostart
-if ! grep -q "unclutter" /etc/xdg/lxsession/LXDE-pi/autostart; then
-    echo "@unclutter -idle 0" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
-fi
-
-# Start unclutter in current session
-if ! pgrep unclutter > /dev/null; then
-    unclutter -idle 0 &
-fi
+# Create configuration file to disable mouse cursor
+sudo tee /etc/X11/xorg.conf.d/99-nocursor.conf << EOF
+Section "InputClass"
+        Identifier "Disable mouse cursor"
+        MatchIsPointer "on"
+        Option "NoCursor" "true"
+EndSection
+EOF
 
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"
