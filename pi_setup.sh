@@ -68,7 +68,7 @@ echo "Building wayfire-plugins-extra..."
 cd ~
 git clone https://github.com/seffs/wayfire-plugins-extra/
 cd wayfire-plugins-extra
-meson build
+meson setup build
 ninja -C build
 sudo ninja -C build install
 
