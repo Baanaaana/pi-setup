@@ -102,7 +102,8 @@ if confirm "Do you want to hide the mouse cursor?"; then
     sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
         libcairo2-dev libwlroots-dev libwf-config-dev \
         vulkan-tools mesa-vulkan-drivers \
-        meson ninja-build pkg-config cmake
+        meson ninja-build pkg-config cmake \
+        nlohmann-json3-dev
 
     # First install Wayfire from source
     echo "Building Wayfire..."
@@ -110,7 +111,7 @@ if confirm "Do you want to hide the mouse cursor?"; then
     rm -rf wayfire
     git clone https://github.com/WayfireWM/wayfire.git
     cd wayfire
-    meson build --prefix=/usr --buildtype=release
+    meson setup build --prefix=/usr --buildtype=release
     ninja -C build && sudo ninja -C build install
     cd ~
 
@@ -119,7 +120,7 @@ if confirm "Do you want to hide the mouse cursor?"; then
     rm -rf wayfire-plugins-extra
     git clone https://github.com/WayfireWM/wayfire-plugins-extra
     cd wayfire-plugins-extra
-    meson build --prefix=/usr --buildtype=release
+    meson setup build --prefix=/usr --buildtype=release
     ninja -C build && sudo ninja -C build install
 
     # Create wayfire config directory
