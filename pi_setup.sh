@@ -100,49 +100,17 @@ if confirm "Do you want to hide the mouse cursor?"; then
     echo "Installing required development packages..."
     sudo apt update
     sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
-        libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build \
-        cmake libvulkan-dev
-
-    # Add user to required groups
-    sudo usermod -a -G video,input,render $USER
-
-    # Set up proper permissions
-    sudo chmod g+rw /dev/dri/card0
-    sudo chmod g+rw /dev/dri/renderD128
-
-    # Create and set up Vulkan configuration
-    sudo mkdir -p /usr/lib/aarch64-linux-gnu/pkgconfig
-    
-    # Create vulkan.pc file
-    sudo tee /usr/lib/aarch64-linux-gnu/pkgconfig/vulkan.pc << EOF
-prefix=/usr
-exec_prefix=\${prefix}
-libdir=\${prefix}/lib/aarch64-linux-gnu
-includedir=\${prefix}/include
-
-Name: vulkan
-Description: Vulkan Loader
-Version: 1.3.239
-Libs: -L\${libdir} -lvulkan
-Cflags: -I\${includedir}
-EOF
-
-    # Set PKG_CONFIG_PATH
-    export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
+        libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev \
+        vulkan-tools mesa-vulkan-drivers
 
     # Clone and build wayfire-plugins-extra
     echo "Building wayfire-plugins-extra..."
     cd ~
     rm -rf wayfire-plugins-extra
-    git clone https://github.com/seffs/wayfire-plugins-extra/
+    git clone https://github.com/WayfireWM/wayfire-plugins-extra
     cd wayfire-plugins-extra
-
-    # Clean and setup build
-    rm -rf build
-    mkdir build
-    PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH" meson setup build
-    ninja -C build
-    sudo ninja -C build install
+    meson build --prefix=/usr --buildtype=release
+    ninja -C build && sudo ninja -C build install
 
     # Create wayfire config directory
     mkdir -p ~/.config
@@ -154,16 +122,6 @@ plugins = \\
         autostart \\
         hide-cursor
 EOF
-
-    # Create udev rule for DRM devices
-    sudo tee /etc/udev/rules.d/99-drm.rules << EOF
-SUBSYSTEM=="drm", ACTION=="add", TAG+="systemd", ENV{SYSTEMD_WANTS}="wayfire.service"
-KERNEL=="card[0-9]*", SUBSYSTEM=="drm", DRIVERS=="", TAG+="seat", TAG+="master-of-seat"
-EOF
-
-    # Reload udev rules
-    sudo udevadm control --reload-rules
-    sudo udevadm trigger
 fi
 
 # Ask for reboot
