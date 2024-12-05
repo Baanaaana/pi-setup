@@ -1,17 +1,5 @@
 #!/bin/bash
 
-# Switch from Wayland to X11 by modifying raspi config
-echo "Switching from Wayland to X11..."
-if [ -f /boot/config.txt ]; then
-    # Backup original config
-    sudo cp /boot/config.txt /boot/config.txt.backup
-    
-    # Add dtoverlay=vc4-fkms-v3d if not present
-    if ! grep -q "^dtoverlay=vc4-fkms-v3d" /boot/config.txt; then
-        echo "dtoverlay=vc4-fkms-v3d" | sudo tee -a /boot/config.txt
-    fi
-fi
-
 # Check if .bashrc exists
 if [ ! -f ~/.bashrc ]; then
     echo "Creating .bashrc file..."
@@ -25,6 +13,27 @@ echo "Adding configurations to .bashrc..."
 if ! grep -q "alias update='sudo -- sh -c \"apt update && apt upgrade -y\"'" ~/.bashrc; then
     echo -e "\n# update our debian/ubuntu box" >> ~/.bashrc
     echo "alias update='sudo -- sh -c \"apt update && apt upgrade -y\"'" >> ~/.bashrc
+fi
+
+# Add additional useful aliases
+if ! grep -q "alias temp='/usr/bin/vcgencmd measure_temp'" ~/.bashrc; then
+    echo -e "\n# check raspberry pi temperature" >> ~/.bashrc
+    echo "alias temp='/usr/bin/vcgencmd measure_temp'" >> ~/.bashrc
+fi
+
+if ! grep -q "alias boot='sudo nano /boot/config.txt'" ~/.bashrc; then
+    echo -e "\n# quick edit boot config" >> ~/.bashrc
+    echo "alias boot='sudo nano /boot/config.txt'" >> ~/.bashrc
+fi
+
+if ! grep -q "alias autostart='sudo nano /etc/xdg/lxsession/LXDE-pi/autostart'" ~/.bashrc; then
+    echo -e "\n# quick edit autostart config" >> ~/.bashrc
+    echo "alias autostart='sudo nano /etc/xdg/lxsession/LXDE-pi/autostart'" >> ~/.bashrc
+fi
+
+if ! grep -q "alias cron='sudo crontab -e'" ~/.bashrc; then
+    echo -e "\n# quick edit crontab" >> ~/.bashrc
+    echo "alias cron='sudo crontab -e'" >> ~/.bashrc
 fi
 
 if ! grep -q "^echo \"\"" ~/.bashrc; then
@@ -49,24 +58,30 @@ if ! command -v neofetch &> /dev/null; then
     sudo apt install -y neofetch
 fi
 
-# Check if unclutter is installed
-if ! command -v unclutter &> /dev/null; then
-    echo "Installing unclutter..."
-    sudo apt update
-    sudo apt install -y unclutter
-fi
+# Install required packages for wayfire-plugins-extra
+echo "Installing required packages..."
+sudo apt update
+sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build
 
-# Create system-wide LXDE-pi autostart directory if it doesn't exist
-sudo mkdir -p /etc/xdg/lxsession/LXDE-pi
+# Clone and build wayfire-plugins-extra
+echo "Building wayfire-plugins-extra..."
+cd ~
+git clone https://github.com/seffs/wayfire-plugins-extra/
+cd wayfire-plugins-extra
+meson build
+ninja -C build
+sudo ninja -C build install
 
-# Configure unclutter and screensaver settings
-sudo tee /etc/xdg/lxsession/LXDE-pi/autostart << EOF
-@lxpanel --profile LXDE
-@pcmanfm --desktop --profile LXDE
-@xset s off
-@xset -dpms
-@xset s noblank
-@unclutter -idle 0
+# Create wayfire config directory
+mkdir -p ~/.config
+
+# Configure wayfire
+echo "Configuring wayfire..."
+cat > ~/.config/wayfire.ini << EOF
+[core]
+plugins = \\
+        autostart \\
+        hide-cursor
 EOF
 
 echo "Setup complete! System will reboot in 10 seconds..."
