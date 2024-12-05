@@ -20,9 +20,9 @@ fi
 
 echo "Adding configurations to .bashrc..."
 
-if ! grep -q "alias update='sudo -- sh -c \"apt update && apt upgrade -y\"'" ~/.bashrc; then
+if ! grep -q "alias update='sudo -- sh -c \"apt update && sudo apt dist-upgrade -y && sudo apt upgrade -y && sudo apt autoremove -y\"'" ~/.bashrc; then
     echo -e "\n# update our debian/ubuntu box" >> ~/.bashrc
-    echo "alias update='sudo -- sh -c \"apt update && apt upgrade -y\"'" >> ~/.bashrc
+    echo "alias update='sudo -- sh -c \"apt update && sudo apt dist-upgrade -y && sudo apt upgrade -y && sudo apt autoremove -y\"'" >> ~/.bashrc
 fi
 
 if ! grep -q "alias temp='/usr/bin/vcgencmd measure_temp'" ~/.bashrc; then
