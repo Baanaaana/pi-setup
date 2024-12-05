@@ -20,6 +20,42 @@ The script offers the following optional configurations:
 - Neofetch installation and configuration
 - Optional reboot after installation
 
+### Quick Installation
+
+Run one of these commands:
+
+For automatic installation with all features enabled:
+
+```bash
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh
+```
+
+For interactive installation with feature selection:
+
+```bash
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh --interactive
+```
+
+### Manual Installation
+
+1. Download the script:
+
+```bash
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh
+```
+
+2. Make it executable:
+
+```bash
+chmod +x pi_setup.sh
+```
+
+3. Run the script:
+
+```bash
+./pi_setup.sh
+```
+
 ## Translation Display Script
 
 A script to install and configure PiTranslate with a local webpage display. This script sets up a live translation tool with a display optimized for 800x480 screens.
