@@ -2,7 +2,7 @@
 
 # Update system first
 echo "Updating system packages..."
-sudo apt update && sudo apt upgrade -y && sudo apt autoremove -y
+sudo apt update && sudo apt dist-upgrade -y && sudo apt upgrade -y && sudo apt autoremove -y
 
 # Install RealVNC server
 echo "Installing RealVNC server..."
@@ -76,10 +76,13 @@ echo "Installing required development packages..."
 sudo apt update
 sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
     libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build \
-    vulkan-tools vulkan-validationlayers-dev cmake
+    vulkan-tools vulkan-validationlayers-dev cmake \
+    libvulkan-dev vulkan-headers vulkan-validationlayers vulkan-tools
 
-# Set PKG_CONFIG_PATH for vulkan
-export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH"
+# Set PKG_CONFIG_PATH for vulkan and create symlink if needed
+sudo mkdir -p /usr/lib/aarch64-linux-gnu/pkgconfig
+sudo ln -sf /usr/share/vulkan/registry/vulkan.pc /usr/lib/aarch64-linux-gnu/pkgconfig/vulkan.pc
+export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig:/usr/share/vulkan/registry:$PKG_CONFIG_PATH"
 
 # Clone and build wayfire-plugins-extra
 echo "Building wayfire-plugins-extra..."
@@ -88,6 +91,10 @@ cd ~
 rm -rf wayfire-plugins-extra
 git clone https://github.com/seffs/wayfire-plugins-extra/
 cd wayfire-plugins-extra
+
+# Clean and recreate build directory
+rm -rf build
+mkdir build
 meson setup build
 ninja -C build
 sudo ninja -C build install
