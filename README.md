@@ -14,7 +14,7 @@ The script offers the following optional configurations:
   - `autostart`: Quick edit autostart configuration
   - `cron`: Quick edit crontab
 - Neofetch installation and configuration
-- Wayfire plugins for hiding mouse cursor
+- Mouse cursor hiding using multiple methods
 - Optional reboot after installation
 
 ## Usage
@@ -27,10 +27,16 @@ This allows you to customize your installation according to your needs.
 
 ## Quick Installation
 
-Run this command to automatically download and execute the script with all features enabled:
+Run one of these commands:
 
+For automatic installation with all features enabled:
 ```bash
 curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash
+```
+
+For interactive installation with feature selection:
+```bash
+curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash -i
 ```
 
 ## Manual Installation
@@ -95,13 +101,30 @@ The script makes the following changes:
 
 1. Installs and enables RealVNC server
 
-2. To `~/.config/wayfire.ini`:
+2. To `/etc/xdg/autostart/unclutter.desktop`:
 
 ```ini
-[core]
-plugins = \
-        autostart \
-        hide-cursor
+[Desktop Entry]
+Type=Application
+Name=Unclutter
+Comment=Hide mouse cursor
+Exec=unclutter --timeout 0 --fork
+Terminal=false
+Categories=System;
+```
+
+3. To `/etc/X11/xorg.conf.d/99-nocursor.conf`:
+
+```conf
+Section "ServerFlags"
+    Option "NoCursor" "true"
+EndSection
+```
+
+4. To `/etc/xdg/lxsession/LXDE-pi/autostart`:
+
+```bash
+@unclutter --timeout 0
 ```
 
 ## Requirements
@@ -110,7 +133,6 @@ plugins = \
 - Internet connection (for installing required packages)
 - Basic terminal access
 - Wayland display server
-- Development packages for building wayfire-plugins-extra
 
 ## After Installation
 
@@ -118,8 +140,8 @@ The script will:
 - Automatically reboot your system after a 10-second countdown
 - You can press Ctrl+C to cancel the automatic reboot
 - After reboot:
+  - Log out and log back in for group changes to take effect
   - All configurations will be active
-  - VNC server will be enabled and ready to use
   - The mouse cursor will be permanently hidden
   - Use touchscreen or mouse movement to navigate
   - All aliases will be available for use

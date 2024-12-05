@@ -92,13 +92,20 @@ if confirm "Do you want to install and configure neofetch?"; then
     fi
 fi
 
-# Wayfire cursor hiding
-if confirm "Do you want to install wayfire-plugins-extra to hide the mouse cursor?"; then
+# Mouse cursor hiding
+if confirm "Do you want to hide the mouse cursor?"; then
     echo "Installing required development packages..."
     sudo apt update
     sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
         libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build \
         cmake libvulkan-dev
+
+    # Add user to required groups
+    sudo usermod -a -G video,input,render $USER
+
+    # Set up proper permissions
+    sudo chmod g+rw /dev/dri/card0
+    sudo chmod g+rw /dev/dri/renderD128
 
     # Create and set up Vulkan configuration
     sudo mkdir -p /usr/lib/aarch64-linux-gnu/pkgconfig
@@ -144,6 +151,16 @@ plugins = \\
         autostart \\
         hide-cursor
 EOF
+
+    # Create udev rule for DRM devices
+    sudo tee /etc/udev/rules.d/99-drm.rules << EOF
+SUBSYSTEM=="drm", ACTION=="add", TAG+="systemd", ENV{SYSTEMD_WANTS}="wayfire.service"
+KERNEL=="card[0-9]*", SUBSYSTEM=="drm", DRIVERS=="", TAG+="seat", TAG+="master-of-seat"
+EOF
+
+    # Reload udev rules
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger
 fi
 
 # Ask for reboot
