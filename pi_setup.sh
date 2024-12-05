@@ -92,6 +92,32 @@ if ! grep -q "xsetroot -cursor /dev/null" /etc/xdg/lxsession/LXDE-pi/autostart; 
     echo "@xsetroot -cursor /dev/null" | sudo tee -a /etc/xdg/lxsession/LXDE-pi/autostart
 fi
 
+# Install required dev packages for wayfire-plugins-extra
+echo "Installing required development packages..."
+sudo apt update
+sudo apt install -y libglibmm-2.4-dev libglm-dev libxml2-dev libpango1.0-dev \
+    libcairo2-dev wayfire-dev libwlroots-dev libwf-config-dev meson ninja-build
+
+# Clone and build wayfire-plugins-extra
+echo "Building wayfire-plugins-extra..."
+cd ~
+git clone https://github.com/seffs/wayfire-plugins-extra/
+cd wayfire-plugins-extra
+meson setup build
+ninja -C build
+sudo ninja -C build install
+
+# Create wayfire config directory
+mkdir -p ~/.config
+
+# Configure wayfire to use hide_cursor plugin
+cat > ~/.config/wayfire.ini << EOF
+[core]
+plugins = \\
+        autostart \\
+        hide-cursor
+EOF
+
 echo "Setup complete! System will reboot in 10 seconds..."
 echo "Press Ctrl+C to cancel reboot"
 
