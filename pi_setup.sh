@@ -18,6 +18,8 @@ hdmi_force_hotplug=1
 hdmi_group=2
 hdmi_mode=87
 hdmi_cvt=800 400 60 6 0 0 0
+framebuffer_width=800
+framebuffer_height=400
 EOF
 
 # Bash aliases and configurations
