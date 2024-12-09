@@ -11,6 +11,15 @@ sudo apt install -y realvnc-vnc-server
 echo "Enabling VNC..."
 sudo raspi-config nonint do_vnc 0
 
+# Set VNC resolution
+echo "Setting VNC resolution to 800x400..."
+sudo tee /boot/config.txt << EOF
+hdmi_force_hotplug=1
+hdmi_group=2
+hdmi_mode=87
+hdmi_cvt=800 400 60 6 0 0 0
+EOF
+
 # Bash aliases and configurations
 # Check if .bashrc exists
 if [ ! -f ~/.bashrc ]; then
