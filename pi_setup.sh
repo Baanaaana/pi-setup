@@ -13,7 +13,7 @@ sudo raspi-config nonint do_vnc 0
 
 # Set VNC resolution
 echo "Setting VNC resolution to 800x400..."
-sudo tee /boot/config.txt << EOF
+sudo tee /boot/firmware/config.txt << EOF
 hdmi_force_hotplug=1
 hdmi_group=2
 hdmi_mode=87
