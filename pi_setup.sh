@@ -11,6 +11,29 @@ sudo apt install -y realvnc-vnc-server
 echo "Enabling VNC..."
 sudo raspi-config nonint do_vnc 0
 
+# Disable onscreen keyboard for Wayfire
+echo "Disabling onscreen keyboard for Wayfire..."
+if [ -f /etc/xdg/autostart/matchbox-keyboard.desktop ]; then
+    sudo mv /etc/xdg/autostart/matchbox-keyboard.desktop /etc/xdg/autostart/matchbox-keyboard.desktop.disabled
+fi
+
+# Additionally, disable any Wayfire-specific onscreen keyboard settings
+WAYFIRE_CONFIG_DIR=~/.config/wayfire
+WAYFIRE_CONFIG_FILE=$WAYFIRE_CONFIG_DIR/wayfire.ini
+
+if [ -d "$WAYFIRE_CONFIG_DIR" ]; then
+    if [ ! -f "$WAYFIRE_CONFIG_FILE" ]; then
+        echo "Creating Wayfire configuration file..."
+        mkdir -p "$WAYFIRE_CONFIG_DIR"
+        touch "$WAYFIRE_CONFIG_FILE"
+    fi
+
+    if ! grep -q "disable-onscreen-keyboard" "$WAYFIRE_CONFIG_FILE"; then
+        echo "Disabling onscreen keyboard in Wayfire configuration..."
+        echo -e "\n[onscreen-keyboard]\nenabled = false" >> "$WAYFIRE_CONFIG_FILE"
+    fi
+fi
+
 # Bash aliases and configurations
 # Check if .bashrc exists
 if [ ! -f ~/.bashrc ]; then
