@@ -9,6 +9,7 @@ The script offers the following configurations:
 - VNC server installation and configuration
 - Useful bash aliases and configurations
 - Neofetch installation and configuration
+- Optional kiosk mode for dashboard display
 - Automatic reboot after installation
 
 ## Installation
@@ -45,7 +46,14 @@ The script performs these steps in order:
    - Configures it to run at SSH login
    - Shows system information on login
 
-5. Final Steps:
+5. Optional Kiosk Mode Setup:
+   - Installs Chromium browser
+   - Configures autostart for dashboard
+   - Sets up crash recovery
+   - Enables full-screen kiosk mode
+   - Configures automatic refresh
+
+6. Final Steps:
    - 10-second countdown to reboot
    - Option to cancel reboot with Ctrl+C
    - Automatic system reboot
