@@ -3,56 +3,53 @@
 echo "Setting up kiosk mode..."
 
 # Install required packages
-sudo apt install -y chromium-browser
+sudo apt install -y chromium-browser wtype
+
+# Configure autologin using raspi-config
+echo "Configuring autologin..."
+sudo raspi-config nonint do_boot_behaviour B4
 
 # Create Wayfire config directory
-mkdir -p ~/.config/wayfire
+mkdir -p ~/.config
 
 # Create or update Wayfire config
-cat > ~/.config/wayfire/wayfire.ini << 'EOF'
-[core]
-plugins = autostart
-preferred_decoration_mode = none
-
+cat > ~/.config/wayfire.ini << 'EOF'
 [autostart]
-dashboard = chromium-browser --noerrdialogs --disable-infobars --kiosk https://dashboard.rrcommerce.nl
-
-[window-rules]
-dashboard_rules = on created if app_id contains "Chromium" then fullscreen
-
-[input]
-cursor_theme = default
-cursor_size = 24
-mouse_cursor_speed = 0
+chromium = chromium-browser 'https://dashboard.rrcommerce.nl' --kiosk --noerrdialogs --disable-infobars --no-first-run --ozone-platform=wayland --enable-features=OverlayScrollbar --start-maximized
+switchtab = bash ~/switchtab.sh
+screensaver = false
+dpms = false
 EOF
 
-# Create systemd user service for auto-restart
-mkdir -p ~/.config/systemd/user
-cat > ~/.config/systemd/user/dashboard.service << 'EOF'
-[Unit]
-Description=Dashboard Kiosk
-After=wayfire.service
-Wants=wayfire.service
-
-[Service]
-Environment=WAYLAND_DISPLAY=wayland-1
-ExecStart=/usr/bin/chromium-browser --noerrdialogs --disable-infobars --kiosk https://dashboard.rrcommerce.nl
-Restart=always
-RestartSec=5
-
-[Install]
-WantedBy=default.target
-EOF
-
-# Enable the service
-systemctl --user enable dashboard.service
-
-# Hide mouse cursor when inactive
-echo "Configuring cursor hiding..."
-cat > ~/.config/wayfire/autostart << 'EOF'
+# Create script to handle browser crashes and tab switching
+cat > ~/switchtab.sh << 'EOF'
 #!/bin/bash
-unclutter -idle 0.1 &
-EOF
-chmod +x ~/.config/wayfire/autostart
 
-echo "Kiosk mode setup complete! Please reboot your system." 
+# Find Chromium browser process ID
+chromium_pid=$(pgrep chromium | head -1)
+
+# Check if Chromium is running
+while [ -z $chromium_pid ]; do
+  echo "Chromium browser is not running yet."
+  sleep 5
+  chromium_pid=$(pgrep chromium | head -1)
+done
+
+echo "Chromium browser process ID: $chromium_pid"
+
+export XDG_RUNTIME_DIR=/run/user/1000
+
+# Loop to send keyboard events
+while true; do
+  # Send Ctrl+Tab using wtype command
+  wtype -M ctrl -P Tab
+  wtype -m ctrl -p Tab
+  sleep 15
+done
+EOF
+
+# Make switchtab.sh executable
+chmod +x ~/switchtab.sh
+
+echo "Kiosk mode setup complete! Please reboot your system."
+echo "After reboot, the dashboard will start automatically in kiosk mode." 
