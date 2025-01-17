@@ -1,12 +1,8 @@
-# Raspberry Pi Setup Scripts
-
-A collection of scripts to customize your Raspberry Pi's configuration.
-
-## Pi Setup Script
+# Raspberry Pi Setup Script
 
 A script to customize your Raspberry Pi's terminal configuration. This script modifies your `.bashrc` file to add useful aliases and configurations.
 
-### Features
+## Features
 
 The script offers the following configurations:
 - System update and upgrade (including kept-back packages)
@@ -15,27 +11,10 @@ The script offers the following configurations:
 - Neofetch installation and configuration
 - Automatic reboot after installation
 
-### Installation
+## Installation
 
 ```bash
 curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh
-```
-
-## Kiosk Mode Setup (Optional)
-
-A separate script to configure your Raspberry Pi as a kiosk display for a dashboard.
-
-### Features
-- Installs Chromium browser
-- Configures Wayfire for kiosk mode
-- Sets up automatic restart
-- Hides cursor when inactive
-- Runs dashboard in full-screen mode
-
-### Installation
-
-```bash
-curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/kiosk_setup.sh && chmod +x kiosk_setup.sh && ./kiosk_setup.sh
 ```
 
 ## What The Script Does
