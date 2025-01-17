@@ -24,7 +24,7 @@ if [[ $setup_kiosk =~ ^[Yy]$ ]]; then
     mkdir -p ~/.config/wayfire
 
     # Create or update Wayfire config
-    cat > ~/.config/wayfire/wayfire.ini << EOF
+    cat > ~/.config/wayfire/wayfire.ini << 'EOF'
 [core]
 plugins = autostart
 preferred_decoration_mode = none
@@ -43,7 +43,7 @@ EOF
 
     # Create systemd user service for auto-restart
     mkdir -p ~/.config/systemd/user
-    cat > ~/.config/systemd/user/dashboard.service << EOF
+    cat > ~/.config/systemd/user/dashboard.service << 'EOF'
 [Unit]
 Description=Dashboard Kiosk
 After=wayfire.service
@@ -64,7 +64,7 @@ EOF
 
     # Hide mouse cursor when inactive
     echo "Configuring cursor hiding..."
-    cat > ~/.config/wayfire/autostart << EOF
+    cat > ~/.config/wayfire/autostart << 'EOF'
 #!/bin/bash
 unclutter -idle 0.1 &
 EOF
