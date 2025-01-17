@@ -14,8 +14,12 @@ The script offers the following configurations:
 
 ## Installation
 
-Run this command to automatically download and execute the script:
+For interactive installation (recommended):
+```bash
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh
+```
 
+For non-interactive installation (skips kiosk mode setup):
 ```bash
 curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash
 ```
