@@ -1,27 +1,41 @@
-# Raspberry Pi Setup Script
+# Raspberry Pi Setup Scripts
+
+A collection of scripts to customize your Raspberry Pi's configuration.
+
+## Pi Setup Script
 
 A script to customize your Raspberry Pi's terminal configuration. This script modifies your `.bashrc` file to add useful aliases and configurations.
 
-## Features
+### Features
 
 The script offers the following configurations:
 - System update and upgrade (including kept-back packages)
 - VNC server installation and configuration
 - Useful bash aliases and configurations
 - Neofetch installation and configuration
-- Optional kiosk mode for dashboard display
 - Automatic reboot after installation
 
-## Installation
+### Installation
 
-For interactive installation (recommended):
 ```bash
 curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh && chmod +x pi_setup.sh && ./pi_setup.sh
 ```
 
-For non-interactive installation (skips kiosk mode setup):
+## Kiosk Mode Setup (Optional)
+
+A separate script to configure your Raspberry Pi as a kiosk display for a dashboard.
+
+### Features
+- Installs Chromium browser
+- Configures Wayfire for kiosk mode
+- Sets up automatic restart
+- Hides cursor when inactive
+- Runs dashboard in full-screen mode
+
+### Installation
+
 ```bash
-curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | bash
+curl -O https://raw.githubusercontent.com/Baanaaana/pi-setup/main/kiosk_setup.sh && chmod +x kiosk_setup.sh && ./kiosk_setup.sh
 ```
 
 ## What The Script Does
@@ -50,14 +64,7 @@ The script performs these steps in order:
    - Configures it to run at SSH login
    - Shows system information on login
 
-5. Optional Kiosk Mode Setup:
-   - Installs Chromium browser
-   - Configures autostart for dashboard
-   - Sets up crash recovery
-   - Enables full-screen kiosk mode
-   - Configures automatic refresh
-
-6. Final Steps:
+5. Final Steps:
    - 10-second countdown to reboot
    - Option to cancel reboot with Ctrl+C
    - Automatic system reboot
