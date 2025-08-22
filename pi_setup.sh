@@ -4,6 +4,43 @@
 echo "Updating system packages..."
 sudo apt update && sudo apt dist-upgrade -y && sudo apt upgrade -y && sudo apt autoremove -y
 
+# Install and configure unattended-upgrades for automatic updates
+echo "Installing unattended-upgrades..."
+sudo apt install -y unattended-upgrades apt-listchanges
+
+echo "Configuring unattended-upgrades..."
+# Enable automatic updates
+sudo dpkg-reconfigure -plow unattended-upgrades
+
+# Configure unattended-upgrades settings
+sudo tee /etc/apt/apt.conf.d/50unattended-upgrades > /dev/null <<EOF
+Unattended-Upgrade::Origins-Pattern {
+    "origin=Debian,codename=\${distro_codename}-updates";
+    "origin=Debian,codename=\${distro_codename}-proposed-updates";
+    "origin=Debian,codename=\${distro_codename},label=Debian";
+    "origin=Debian,codename=\${distro_codename},label=Debian-Security";
+    "origin=Raspbian,codename=\${distro_codename},label=Raspbian";
+    "origin=Raspberry Pi Foundation,codename=\${distro_codename},label=Raspberry Pi Foundation";
+};
+Unattended-Upgrade::AutoFixInterruptedDpkg "true";
+Unattended-Upgrade::MinimalSteps "true";
+Unattended-Upgrade::Remove-Unused-Kernel-Packages "true";
+Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+Unattended-Upgrade::Automatic-Reboot "false";
+Unattended-Upgrade::Automatic-Reboot-Time "03:00";
+EOF
+
+# Configure automatic update schedule
+sudo tee /etc/apt/apt.conf.d/20auto-upgrades > /dev/null <<EOF
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "7";
+APT::Periodic::Unattended-Upgrade "1";
+EOF
+
+echo "Unattended-upgrades configured successfully!"
+
 # Install RealVNC server
 echo "Installing RealVNC server..."
 sudo apt update

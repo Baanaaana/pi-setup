@@ -6,6 +6,7 @@ A script to customize your Raspberry Pi's terminal configuration. This script mo
 
 The script offers the following configurations:
 - System update and upgrade (including kept-back packages)
+- Automatic security updates via unattended-upgrades
 - VNC server installation and configuration
 - Useful bash aliases and configurations
 - Neofetch installation and configuration
@@ -27,23 +28,31 @@ The script performs these steps in order:
    - Performs regular upgrade
    - Removes unnecessary packages
 
-2. VNC Server Setup:
+2. Automatic Updates Configuration:
+   - Installs unattended-upgrades and apt-listchanges
+   - Configures automatic security updates
+   - Sets up daily update checks and installations
+   - Configures update sources (Debian, Raspbian, Raspberry Pi Foundation)
+   - Enables automatic removal of unused packages
+   - Disables automatic reboot (manual control maintained)
+
+3. VNC Server Setup:
    - Installs RealVNC server package
    - Enables VNC service using raspi-config
    - Configures VNC for remote access
 
-3. Bash Configuration:
+4. Bash Configuration:
    - Creates .bashrc if it doesn't exist
    - Adds useful aliases
    - Configures terminal appearance
    - Sets up command shortcuts
 
-4. Neofetch Installation:
+5. Neofetch Installation:
    - Installs neofetch package
    - Configures it to run at SSH login
    - Shows system information on login
 
-5. Final Steps:
+6. Final Steps:
    - 10-second countdown to reboot
    - Option to cancel reboot with Ctrl+C
    - Automatic system reboot
@@ -93,6 +102,8 @@ The script will:
   - All configurations will be active
   - VNC server will be enabled and ready to use
   - All aliases will be available for use
+  - Automatic security updates will be running in the background
+  - System will check for and install updates daily
 
 ## Available Aliases
 
