@@ -98,15 +98,26 @@ if ! grep -q "^clear" "$USER_HOME/.bashrc"; then
 fi
 
 # Neofetch installation
+echo "Installing neofetch..."
+sudo apt update
+sudo apt install -y neofetch
+
+# Verify neofetch was installed successfully
 if ! command -v neofetch &> /dev/null; then
-    echo "Installing neofetch..."
-    sudo apt update
-    sudo apt install -y neofetch
+    echo "WARNING: neofetch installation may have failed. Trying alternative method..."
+    sudo apt-get update
+    sudo apt-get install -y neofetch
 fi
 
-if ! grep -q "^neofetch" "$USER_HOME/.bashrc"; then
-    echo -e "\n# start neofetch at SSH login" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
-    echo "neofetch" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
+# Add neofetch to bashrc only if it's installed
+if command -v neofetch &> /dev/null; then
+    if ! grep -q "^neofetch" "$USER_HOME/.bashrc"; then
+        echo -e "\n# start neofetch at SSH login" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
+        echo "neofetch" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
+        echo "Neofetch added to .bashrc"
+    fi
+else
+    echo "WARNING: neofetch could not be installed. Skipping .bashrc configuration."
 fi
 
 echo "Setup complete! System will reboot in 10 seconds..."
