@@ -13,8 +13,9 @@ echo "Installing unattended-upgrades..."
 sudo apt install -y unattended-upgrades apt-listchanges
 
 echo "Configuring unattended-upgrades..."
-# Enable automatic updates
-sudo dpkg-reconfigure -plow unattended-upgrades
+# Enable automatic updates non-interactively
+echo "unattended-upgrades unattended-upgrades/enable_auto_updates boolean true" | sudo debconf-set-selections
+sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure -plow unattended-upgrades
 
 # Configure unattended-upgrades settings
 sudo tee /etc/apt/apt.conf.d/50unattended-upgrades > /dev/null <<EOF
