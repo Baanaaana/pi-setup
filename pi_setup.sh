@@ -18,14 +18,14 @@ echo "unattended-upgrades unattended-upgrades/enable_auto_updates boolean true" 
 sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure -plow unattended-upgrades
 
 # Configure unattended-upgrades settings
-sudo tee /etc/apt/apt.conf.d/50unattended-upgrades > /dev/null <<EOF
+sudo tee /etc/apt/apt.conf.d/50unattended-upgrades > /dev/null <<'EOCONFIG'
 Unattended-Upgrade::Origins-Pattern {
-    "origin=Debian,codename=\${distro_codename}-updates";
-    "origin=Debian,codename=\${distro_codename}-proposed-updates";
-    "origin=Debian,codename=\${distro_codename},label=Debian";
-    "origin=Debian,codename=\${distro_codename},label=Debian-Security";
-    "origin=Raspbian,codename=\${distro_codename},label=Raspbian";
-    "origin=Raspberry Pi Foundation,codename=\${distro_codename},label=Raspberry Pi Foundation";
+    "origin=Debian,codename=${distro_codename}-updates";
+    "origin=Debian,codename=${distro_codename}-proposed-updates";
+    "origin=Debian,codename=${distro_codename},label=Debian";
+    "origin=Debian,codename=${distro_codename},label=Debian-Security";
+    "origin=Raspbian,codename=${distro_codename},label=Raspbian";
+    "origin=Raspberry Pi Foundation,codename=${distro_codename},label=Raspberry Pi Foundation";
 };
 Unattended-Upgrade::AutoFixInterruptedDpkg "true";
 Unattended-Upgrade::MinimalSteps "true";
@@ -34,15 +34,15 @@ Unattended-Upgrade::Remove-New-Unused-Dependencies "true";
 Unattended-Upgrade::Remove-Unused-Dependencies "true";
 Unattended-Upgrade::Automatic-Reboot "false";
 Unattended-Upgrade::Automatic-Reboot-Time "03:00";
-EOF
+EOCONFIG
 
 # Configure automatic update schedule
-sudo tee /etc/apt/apt.conf.d/20auto-upgrades > /dev/null <<EOF
+sudo tee /etc/apt/apt.conf.d/20auto-upgrades > /dev/null <<'EOCONFIG2'
 APT::Periodic::Update-Package-Lists "1";
 APT::Periodic::Download-Upgradeable-Packages "1";
 APT::Periodic::AutocleanInterval "7";
 APT::Periodic::Unattended-Upgrade "1";
-EOF
+EOCONFIG2
 
 echo "Unattended-upgrades configured successfully!"
 

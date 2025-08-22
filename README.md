@@ -15,7 +15,7 @@ The script offers the following configurations:
 ## Installation
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh | sudo bash
+curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/pi_setup.sh -o pi_setup.sh && sudo bash pi_setup.sh && rm pi_setup.sh
 ```
 
 ## What The Script Does
