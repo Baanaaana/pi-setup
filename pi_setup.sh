@@ -97,27 +97,27 @@ if ! grep -q "^clear" "$USER_HOME/.bashrc"; then
     echo "clear" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
 fi
 
-# Neofetch installation
-echo "Installing neofetch..."
+# Fastfetch installation
+echo "Installing fastfetch..."
 sudo apt update
-sudo apt install -y neofetch
+sudo apt install -y fastfetch
 
-# Verify neofetch was installed successfully
-if ! command -v neofetch &> /dev/null; then
-    echo "WARNING: neofetch installation may have failed. Trying alternative method..."
+# Verify fastfetch was installed successfully
+if ! command -v fastfetch &> /dev/null; then
+    echo "WARNING: fastfetch installation may have failed. Trying alternative method..."
     sudo apt-get update
-    sudo apt-get install -y neofetch
+    sudo apt-get install -y fastfetch
 fi
 
-# Add neofetch to bashrc only if it's installed
-if command -v neofetch &> /dev/null; then
-    if ! grep -q "^neofetch" "$USER_HOME/.bashrc"; then
-        echo -e "\n# start neofetch at SSH login" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
-        echo "neofetch" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
-        echo "Neofetch added to .bashrc"
+# Add fastfetch to bashrc only if it's installed
+if command -v fastfetch &> /dev/null; then
+    if ! grep -q "^fastfetch" "$USER_HOME/.bashrc"; then
+        echo -e "\n# start fastfetch at SSH login" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
+        echo "fastfetch" | sudo -u $ACTUAL_USER tee -a "$USER_HOME/.bashrc" > /dev/null
+        echo "Fastfetch added to .bashrc"
     fi
 else
-    echo "WARNING: neofetch could not be installed. Skipping .bashrc configuration."
+    echo "WARNING: fastfetch could not be installed. Skipping .bashrc configuration."
 fi
 
 echo "Setup complete! System will reboot in 10 seconds..."

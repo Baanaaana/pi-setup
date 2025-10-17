@@ -9,7 +9,7 @@ The script offers the following configurations:
 - Automatic security updates via unattended-upgrades
 - VNC server installation and configuration
 - Useful bash aliases and configurations
-- Neofetch installation and configuration
+- Fastfetch installation and configuration
 - Automatic reboot after installation
 
 ## Installation
@@ -47,8 +47,8 @@ The script performs these steps in order:
    - Configures terminal appearance
    - Sets up command shortcuts
 
-5. Neofetch Installation:
-   - Installs neofetch package
+5. Fastfetch Installation:
+   - Installs fastfetch package
    - Configures it to run at SSH login
    - Shows system information on login
 
@@ -83,8 +83,8 @@ echo ""
 # clear default message
 clear
 
-# start neofetch at SSH login
-neofetch
+# start fastfetch at SSH login
+fastfetch
 ```
 
 ## Requirements
