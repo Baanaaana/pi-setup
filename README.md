@@ -124,3 +124,10 @@ After installation, you can connect to your Raspberry Pi using:
 - VNC Viewer (download from RealVNC website)
 - Default port: 5900
 - Use your Raspberry Pi's IP address and login credentials
+
+
+## PiOSK Chromium fix
+
+```bash
+curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/piosk_chromium_fix.sh -o pi_setup.sh && sudo bash pi_setup.sh && rm pi_setup.sh
+```
