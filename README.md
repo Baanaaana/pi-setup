@@ -126,6 +126,66 @@ After installation, you can connect to your Raspberry Pi using:
 - Use your Raspberry Pi's IP address and login credentials
 
 
+## macOS SD Card Formatter
+
+A utility script for macOS to format SD cards with options for quick or secure formatting. Useful for preparing SD cards before flashing Raspberry Pi OS.
+
+### Features
+
+- Interactive disk selection with safety checks
+- Prevents formatting of internal/system disks
+- Two formatting modes:
+  - **Quick Format**: Fast FAT32 formatting (recommended)
+  - **Secure Erase**: Overwrites entire card with zeros before formatting (for security/privacy)
+- Color-coded output for clear feedback
+- Multiple confirmation prompts to prevent accidents
+- Safe disk ejection after formatting
+
+### Usage
+
+```bash
+# Download and run
+curl -sSL https://raw.githubusercontent.com/Baanaaana/pi-setup/main/macos_sd_format.sh -o macos_sd_format.sh && sudo bash macos_sd_format.sh && rm macos_sd_format.sh
+
+# Or run locally
+sudo bash macos_sd_format.sh
+```
+
+### Important Notes
+
+- **macOS only**: This script is designed specifically for macOS
+- **Requires sudo**: Must be run with administrator privileges
+- **Destructive operation**: ALL data on the selected disk will be erased
+- **External disks only**: The script will not format internal disks
+- **Secure erase is slow**: Can take 30+ minutes depending on card size
+
+### What The Script Does
+
+1. Verifies macOS environment and sudo privileges
+2. Scans and lists all external disks
+3. Allows interactive selection of target disk
+4. Displays detailed disk information
+5. Requires explicit confirmation (type "YES")
+6. Offers choice between quick format or secure erase
+7. Unmounts the selected disk
+8. Formats as FAT32 (MBR partition scheme)
+9. Safely ejects the disk
+
+### Format Options
+
+**Quick Format:**
+- Fast operation (usually under 1 minute)
+- Creates new FAT32 file system
+- Recommended for most users
+- Good for preparing cards for Raspberry Pi Imager
+
+**Secure Erase:**
+- Slow operation (30+ minutes)
+- Overwrites entire disk with zeros
+- Then formats as FAT32
+- Better for security/privacy concerns
+- Use when disposing of cards or reusing cards with sensitive data
+
 ## PiOSK Chromium fix
 
 ```bash
